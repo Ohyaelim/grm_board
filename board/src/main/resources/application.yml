@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/oylBoard?serverTimezone=Asia/Seoul
+    username: root
+    password: yaelim1122
+  devtools:
+    livereload:
+      enabled: true
+
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update # SessionFactory? ??? ? drop,create,alter
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        format_sql: true
+        show-sql: true
