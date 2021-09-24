@@ -20,7 +20,7 @@
             </ValidationProvider>
 
             <v-text-field
-                v-model="name"
+                v-model="nickname"
                 label="이름"
                 type="text"
                 :rules="nameRules"
@@ -69,7 +69,7 @@ export default {
       email:'',
       password:'',
       passwordCheck:'',
-      name:'',
+      nickname:'',
       terms:false,
       emailRules: [
         v=> !!v || '이메일은 필수입니다.',
@@ -93,7 +93,7 @@ export default {
       const userData = {
         email: this.email,
         password: this.password,
-        name: this.name
+        nickname: this.nickname
       };
 
       const response = await registerUser(userData);
