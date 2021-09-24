@@ -25,7 +25,7 @@
           <thead>
           <tr>
             <th class="text-left">
-              #NO
+              No.
             </th>
             <th class="text-left">
               제목
@@ -44,7 +44,8 @@
           <tbody>
           <tr
               v-for="item in datas"
-              :key="item.name"
+              :key="item.postId"
+              @click = "detailPosting(item.postId)"
           >
             <td>{{ item.postId }}</td>
             <td>{{ item.title }}</td>
@@ -73,7 +74,7 @@
           fab
           color="#8852a6"
           to="/boardWrite"
-          @click="addPost">
+      >
 
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
@@ -92,9 +93,7 @@ export default {
   data() {
     return {
       datas:[
-
       ]
-
     };
   },
 
@@ -102,8 +101,8 @@ export default {
     this.postList(1)
   },
   methods: {
-    postList(categoryId) {
-      this.$axios.get(`board/list/${categoryId}`)
+    postList(boardId) {
+      this.$axios.get(`post/list/${boardId}`)
           .then((res) => {
             this.datas = res.data.content;
           })
@@ -114,14 +113,8 @@ export default {
 
     detailPosting: function (postId) {
       this.$router.push({
-        path: `/board/${postId}`
+        path: `/post/${postId}`
       });
-    },
-
-    addPost: function () {
-      this.$router.push({
-        path: `/create`
-      })
     }
   }
 }

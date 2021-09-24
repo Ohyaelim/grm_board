@@ -74,7 +74,6 @@
         </v-col>
         <hr class="ma-3 white my-hr"/>
         <v-list-item-group
-            v-model="group"
             active-class="deep-purple--text text--accent-4"
         >
           <v-list-item to="/">

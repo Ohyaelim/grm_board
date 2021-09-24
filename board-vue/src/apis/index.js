@@ -2,6 +2,9 @@ import axios from 'axios'
 
 const instance = axios.create({
 //     baseURL: "http://localhost:8080"
+    headers: {
+        authtoken: localStorage.getItem("token"), // header의 속성
+    },
 });
 
 function registerUser(userData) {

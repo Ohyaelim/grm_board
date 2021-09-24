@@ -3,6 +3,7 @@
     <v-container>
       <v-form ref="form" @submit.prevent="onSubmitForm">
         <h1 class="text-center">글쓰기 🖋</h1>
+
         <v-select
             label="카테고리"
             :items="items"
@@ -31,7 +32,6 @@
             class="mt-5 float-right mr-3"
             dark
             type="submit"
-            @click="boardWrite({})"
         >
           글쓰기
         </v-btn>
@@ -48,9 +48,9 @@ export default {
   data() {
     return {
       items: [
-        {text: '공지사항', value: '1'},
-        {text: '공부게시판', value: '2'},
-        {text: '질문게시판', value: '3'},
+        {text: '공지사항', value: 1},
+        {text: '공부게시판', value: 2},
+        {text: '질문게시판', value: 3},
       ],
       form: {
         title: '',
@@ -69,7 +69,7 @@ export default {
 
       const response = await createPost(postData);
       if (response.status == 200) {
-        alert('등록완료!');
+        alert(' 정상적으로 등록되었습니다^^');
         await this.$router.push('/boards');
       } else {
         alert(response.data);

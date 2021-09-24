@@ -2,11 +2,10 @@
   <div>
     <v-app>
       <AppBar/>
-      <v-content>
+      <v-main>
         <router-view/>
-      </v-content>
+      </v-main>
       <Footer/>
-      <Modal/>
     </v-app>
   </div>
 </template>
@@ -14,15 +13,13 @@
 <script>
 import AppBar from "@/components/AppBar";
 import Footer from "@/components/Footer";
-import Modal from "@/components/Modal";
 
 export default {
   name: 'App',
 
   components: {
     Footer,
-    AppBar,
-    Modal
+    AppBar
   },
 };
 </script>
