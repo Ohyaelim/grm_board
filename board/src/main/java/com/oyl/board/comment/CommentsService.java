@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +21,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class  CommentsService {
+public class CommentsService {
+
     private final CommentsRepository commentsRepository;
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
@@ -31,7 +33,7 @@ public class  CommentsService {
         Long parentId = commentsDto.getParentsId();
         Member member = memberRepository.findByEmail(visitor_id).orElseThrow(MemberNotFoundException::new);
         Post post = postRepository.findById(post_id).orElseThrow(PostNotFoundException::new);
-        post.setCommentsLength(commentsRepository.countAllByPost_PostId(post_id) + 1);
+
         Comments comments = Comments.builder()
                 .member(member)
                 .post(post)
@@ -74,6 +76,4 @@ public class  CommentsService {
         comments.setIsDeleted(Boolean.TRUE);
         return commentsRepository.save(comments);
     }
-
-
 }

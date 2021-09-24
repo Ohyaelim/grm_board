@@ -7,14 +7,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@EqualsAndHashCode(of="board_id")
 @Entity
+@Table(name = "t_board")
 public class Board {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long board_id;
+    @Column(name ="board_id")
+    private Long boardId;
 
-    @Column(nullable = false, length=50)
-    @Setter
+    @Column(name = "board_type" ,nullable = false, length=50)
     private String boardType;
 }

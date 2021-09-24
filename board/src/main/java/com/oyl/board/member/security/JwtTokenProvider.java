@@ -1,5 +1,6 @@
 package com.oyl.board.member.security;
 
+import com.oyl.board.member.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -34,7 +35,7 @@ public class JwtTokenProvider {
     }
 
     // Jwt 토큰 생성
-    public String createToken(String userId, List<String> roles){
+    public String createToken(String userId, Role roles){
         Claims claims= Jwts.claims().setSubject(userId);
         claims.put("roles", roles);
         Date now=new Date();

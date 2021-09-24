@@ -1,79 +1,78 @@
 package com.oyl.board.member;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.oyl.board.common.BaseTimeEntity;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@EqualsAndHashCode(of="member_id", callSuper = false)
+@NoArgsConstructor
 @Entity
-public class Member implements UserDetails {
+@Table(name = "t_member")
+public class Member extends BaseTimeEntity implements UserDetails{
+    private static final String DELETED_SIGN = "DELETED";
+
+    @Builder
+    public Member(Long member_id, String email, String name, String password, Role role) {
+        this.member_id = member_id;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.role = role;
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="member_id")
     private Long member_id;
 
-    @Column(name="email", unique = true, length = 50)
-    @Setter
     private String email;
 
-    @Column(name="name", length = 50)
-    @Setter
     private String name;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name="password", length = 100)
-    @JsonIgnore
-    @Setter
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public void delete() {
+        email = DELETED_SIGN;
+        name = DELETED_SIGN;
+        password = DELETED_SIGN;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return null;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
         return this.email;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return false;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isEnabled() {
-        return true;
+        return false;
+    }
+
+    public void update(String name) {
+        this.name = name;
     }
 }

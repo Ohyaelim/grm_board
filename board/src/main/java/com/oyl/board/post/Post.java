@@ -6,61 +6,53 @@ import com.oyl.board.board.Board;
 import com.oyl.board.common.BaseTimeEntity;
 import com.oyl.board.member.Member;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@EqualsAndHashCode(of="postId", callSuper = false)
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-public class Post extends BaseTimeEntity {
-    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "t_post")
+public class Post {
+
+    @Id
     @Column(name="post_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
-    @Column(name="title", nullable = false, length=100)
-    @Setter
+    @Column(name="nickname", length = 20, nullable = false)
+    private String nickname;
+
+    @Column(name = "title", length = 100, nullable = false)
     private String title;
 
-    @Column(name="content", length = 10000)
-    @Setter
+    @Column(name = "content")
     private String content;
 
+    @Column(name = "view_count")
+    @ColumnDefault(value ="0")
+    private int viewCount;
 
-    @Column(name="email", length = 50)
-    @Setter
-    private String email;
-
-    @Column(name="commentsLength", length = 50)
-    @Setter
-    private Long commentsLength;
-
-    @Builder.Default
-    @Column(name="isDeleted", length = 10)
-    @Setter
-    private Boolean isDeleted = Boolean.FALSE;
+    @Column(name="reg_date")
+    private LocalDate regDate;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    @Setter
+    @JoinColumn(name="user_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="board_id")
-    @Setter
     private Board board;
 
-    protected Board getBoard(){
-        return board;
-    }
 
-    public Post setUpdate(String title, String content){
-        this.title=title;
-        this.content=content;
-        return this;
+    public void update(Post post){
+        this.content =post.content;
+        this.title = post.title;
+        this.regDate = post.regDate;
     }
 
 }

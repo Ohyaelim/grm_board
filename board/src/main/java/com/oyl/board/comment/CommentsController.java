@@ -1,6 +1,5 @@
 package com.oyl.board.comment;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,15 +15,14 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 @RequestMapping("/comments")
 public class CommentsController {
+
     private final CommentsService commentsService;
 
     @PostMapping("/{post_id}")
-    public ResponseEntity storeComments(@PathVariable Long post_id,
-                                        @RequestBody @Valid CommentsDto commentsDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    public ResponseEntity storeComments(@PathVariable Long post_id, @RequestBody @Valid CommentsDto commentsDto) {
+        org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         String visitorId = authentication.getName();
@@ -58,5 +56,4 @@ public class CommentsController {
         }
 
     }
-
 }

@@ -1,15 +1,13 @@
 package com.oyl.board.comment;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.xml.stream.events.Comment;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+// 어노테이션 필요 없다. Jparepo extends 하면 알아서 가져와줘서 bean 생성가능
 public interface CommentsRepository extends JpaRepository<Comments, Long> {
 
     List<Comments> findCommentsByParentAndPost_PostId(Long parentId, Long id);

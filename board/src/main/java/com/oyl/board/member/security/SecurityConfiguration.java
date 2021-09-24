@@ -35,12 +35,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable() // rest api이므로 기본설정 X, 기본설정은 비인증시 로그인폼 화면으로 redirect됨.
                 .csrf().disable() // rest api이므로 csrf 보안이 필요없으므로 disable처리.
+                .cors().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests() // 사용권한 체크
-                        .antMatchers("/auth/signin","/auth/signup", "/post/free","/posts/free", "/auth/member", "/auth/member/**", "/post/**","/comments/**").permitAll() // 가입 및 로그인은 누구나 접근가능
+                        .antMatchers("/auth/signin","/auth/signup").permitAll() // 가입 및 로그인은 누구나 접근가능
                         .antMatchers(HttpMethod.GET, "/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/**").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/**").permitAll()
                         .anyRequest().hasRole("USER") // 그외 나머지 요청은 모두 인증된 회원만 접근가능
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

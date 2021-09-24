@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Controller
+@RestController
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 @RequestMapping(value = "/auth")
 public class MemberController {
 
@@ -40,11 +39,25 @@ public class MemberController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody SignInDto signinDto){
         Member member= memberService.signin(signinDto);
-        MultiValueMap<String, String>header = new LinkedMultiValueMap<>();
-        header.add("authtoken", jwtTokenProvider.createToken(member.getUsername(), member.getRoles()));
-        return new ResponseEntity(header, HttpStatus.OK);
+//        MultiValueMap<String, String>header = new LinkedMultiValueMap<>();
+        String token = jwtTokenProvider.createToken(member.getUsername(),member.getRole());
+        return new ResponseEntity(token, HttpStatus.OK);
     }
 
+    @GetMapping("/mypage")
+    public ResponseEntity<SignUpDto> findUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Member member  = (Member) authentication.getPrincipal();
+        SignUpDto memberResponse = memberService.findByUserEmail(member.getEmail());
+        return ResponseEntity.ok(memberResponse);
+    }
+    @PutMapping(value = "/mypage")
+    public ResponseEntity<Void> update(@RequestParam String nickname) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Member member  = (Member) authentication.getPrincipal();
+        memberService.update(nickname, member);
+        return ResponseEntity.noContent().build();
+    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CEmailSigninFailedException.class)

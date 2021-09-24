@@ -12,17 +12,20 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@EqualsAndHashCode(of = "commentsId", callSuper = false)
 @Entity
+@Table(name = "t_comment")
 public class Comments extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comments_id")
     private Long commentsId;
-    @Setter
+
+    @Column(length = 255)
     private String email;
-    @Setter
+
+    @Lob
     private String comments;
+
     @Setter
     private Boolean isDeleted = Boolean.FALSE;
 
@@ -35,12 +38,10 @@ public class Comments extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    @Setter
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    @Setter
     private Post post;
 
     public void setParent(Comments parent) {

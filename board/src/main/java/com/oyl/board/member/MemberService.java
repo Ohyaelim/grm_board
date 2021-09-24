@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +22,6 @@ public class MemberService {
                     .email(signUpDto.getEmail())
                     .name(signUpDto.getName())
                     .password(passwordEncoder.encode(signUpDto.getPassword()))
-                    .roles(Collections.singletonList("ROLE_USER"))
                     .build();
             memberRepository.save(member);
         }
@@ -43,12 +41,21 @@ public class MemberService {
     }
 
     @Transactional
+    public SignUpDto findByUserEmail(String email){
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalAccessError("가입된 이메일이 아닙니다."));
+        return SignUpDto.profile(member);
+    }
+
+    @Transactional
+    public void update(String name, Member member) {
+        member.update(name);
+        memberRepository.save(member);
+    }
+
+    @Transactional
     public void dismembership(Long member_id){
         Member member = memberRepository.findById(member_id).orElseThrow(MemberNotFoundException::new);
-        member.setEmail("");
-        member.setName("");
-        member.setPassword("");
-        memberRepository.save(member);
+        member.delete();
     }
 
     @Transactional
