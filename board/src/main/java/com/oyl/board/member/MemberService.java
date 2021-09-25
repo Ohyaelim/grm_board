@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class MemberService {
                     .email(signUpDto.getEmail())
                     .name(signUpDto.getName())
                     .password(passwordEncoder.encode(signUpDto.getPassword()))
+                    .roles(Collections.singletonList("ROLE_USER"))
                     .build();
             memberRepository.save(member);
         }
@@ -60,7 +62,6 @@ public class MemberService {
 
     @Transactional
     public Member getMember(String visitorId) {
-        System.out.println("visitorID"+ visitorId);
         Member member = memberRepository.findByEmail(visitorId).orElseThrow(MemberNotFoundException::new);
         return member;
     }
