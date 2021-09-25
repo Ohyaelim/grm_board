@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.Iterator;
 
 
@@ -25,14 +26,16 @@ public class PostService {
 
     @Transactional
     public Post create(PostRequest request, Long boardId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Member member = (Member) authentication.getPrincipal();
         Board board = boardRepository.findByBoardId(boardId);
         return postRepository.save(Post.builder()
                 .board(board)
                 .content(request.getContent())
-                .nickname(request.getNickname())
+                .nickname(member.getName())
                 .title(request.getTitle())
-                .regDate(request.getRegDate())
-                .member(memberRepository.findByName(request.getNickname()))
+                .regDate(LocalDate.now())
+                .member(member)
                 .build());
     }
 
