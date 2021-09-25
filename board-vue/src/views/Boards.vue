@@ -34,10 +34,10 @@
               작성자
             </th>
             <th class="text-left">
-              작성일자
+              조회수
             </th>
             <th class="text-left">
-              조회수
+              적성일자
             </th>
           </tr>
           </thead>
