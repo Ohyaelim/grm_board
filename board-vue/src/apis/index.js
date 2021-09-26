@@ -16,6 +16,10 @@ function signInUser(userData){
     return instance.post('auth/signin', userData);
 }
 
+function getMyInfoApi() {
+    return instance.get("auth/mypage");
+}
+
 // function postList(){
 //     return instance.get('posts/1');
 // }
@@ -29,4 +33,4 @@ function createPost(postData){
     return instance.post(`post/`+postData.board, postData);
 }
 
-export { registerUser, signInUser, createPost};
+export { registerUser, signInUser, createPost, getMyInfoApi };
