@@ -20,6 +20,7 @@ public class PostDetailResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate regDate;
     private long viewCount;
+    private Long postId;
 
     public PostDetailResponse(Post post){
         this.nickname = post.getNickname();
@@ -27,6 +28,7 @@ public class PostDetailResponse {
         this.content = post.getContent();
         this.regDate = post.getRegDate();
         this.viewCount = post.getViewCount();
+        this.postId = post.getPostId();
     }
 
 }

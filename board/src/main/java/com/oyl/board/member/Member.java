@@ -31,7 +31,7 @@ public class Member extends BaseTimeEntity implements UserDetails{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long member_id;
+    private Long memberId;
 
     private String email;
 

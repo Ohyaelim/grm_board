@@ -34,14 +34,13 @@ public class Post {
     private String content;
 
     @Column(name = "view_count")
-    @ColumnDefault(value ="0")
-    private int viewCount;
+    private long viewCount;
 
     @Column(name="reg_date")
     private LocalDate regDate;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="member_id")
     private Member member;
 
     @ManyToOne

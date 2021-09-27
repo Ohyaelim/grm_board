@@ -37,13 +37,18 @@
           v-if= "isLogin===true"
           @click = "updatePosting(post.postId)"
       >수정</v-btn>
-      <v-btn color="#AB47BC" v-if= "isLogin===true" >삭제</v-btn>
+      <v-btn
+          color="#AB47BC"
+          v-if= "isLogin===true"
+          @click = "deleteFrom(post.postId)"
+      >삭제</v-btn>
     </div>
   </div>
 </template>
 
 <script>
 import {mapState} from "vuex"
+import {deletePost} from "@/apis";
 
 export default {
   name: "Detail",
@@ -69,6 +74,16 @@ export default {
       this.$router.push({
         path: `/boardModify/${postId}`
       })
+    },
+    //삭제 관련
+    async deleteFrom(){
+      const response = await deletePost(this.post.postId);
+      if (response.status == 200) {
+        alert(' 정상적으로 삭제되었습니다^^ ');
+        await this.$router.push('/boards');
+      }else {
+        alert(response.data);
+      }
     }
   }
 }

@@ -33,17 +33,17 @@ function createPost(postData){
     return instance.post(`post/`+postData.board, postData);
 }
 
-// function deletePost(){
-//     return instance.delete('post/delete');
-// }
+function deletePost(postId){
+    return instance.delete(`/post/`+postId);
+}
 
 function updatePost(postData, postId){
     console.log(localStorage.getItem('token'));
-    return instance.put(`post/`+ postId, postData);
+    return instance.put(`/post/`+ postId, postData);
 }
 
 // function getPost(postData){
 //     return instance.get('post/'+postData.post);
 // }
 
-export { registerUser, signInUser, createPost, getMyInfoApi, updatePost};
+export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost};

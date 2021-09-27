@@ -68,7 +68,6 @@ export default {
         content: this.form.content,
         board: this.form.board
       };
-
       const response = await createPost(postData);
       if (response.status == 200) {
         alert(' 정상적으로 등록되었습니다^^');
