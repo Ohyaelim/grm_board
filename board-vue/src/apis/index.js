@@ -16,6 +16,10 @@ function signInUser(userData){
     return instance.post('auth/signin', userData);
 }
 
+function getMyInfoApi() {
+    return instance.get("auth/mypage");
+}
+
 // function postList(){
 //     return instance.get('posts/1');
 // }
@@ -29,4 +33,17 @@ function createPost(postData){
     return instance.post(`post/`+postData.board, postData);
 }
 
-export { registerUser, signInUser, createPost};
+function deletePost(postId){
+    return instance.delete(`/post/`+postId);
+}
+
+function updatePost(postData, postId){
+    console.log(localStorage.getItem('token'));
+    return instance.put(`/post/`+ postId, postData);
+}
+
+// function getPost(postData){
+//     return instance.get('post/'+postData.post);
+// }
+
+export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost};

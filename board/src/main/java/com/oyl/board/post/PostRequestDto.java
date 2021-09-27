@@ -24,6 +24,6 @@ public class PostRequest {
         return Post.builder()
                 .content(content)
                 .title(title)
-                .regDate(regDate).build();
+                .regDate(LocalDate.now()).build();
     }
 }

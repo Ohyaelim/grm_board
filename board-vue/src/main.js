@@ -21,7 +21,10 @@ new Vue({
   router,
   store,
   beforeCreate() {
-    this.$store.dispatch('getMemberInfo')
+    const token = localStorage.getItem("token");
+    if (token) {
+      this.$store.state.isLogin = true;
+    }
   },
   vuetify,
   axios,

@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-container>
+
       <v-card align="center">
         <v-subheader>회원가입</v-subheader>
         <v-form ref="form" v-model="valid" @submit.prevent="submitForm">

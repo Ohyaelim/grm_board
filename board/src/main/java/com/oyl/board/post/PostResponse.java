@@ -1,6 +1,7 @@
 package com.oyl.board.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.oyl.board.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

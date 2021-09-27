@@ -39,8 +39,9 @@ public class MemberController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody SignInDto signinDto){
         Member member= memberService.signin(signinDto);
-//        MultiValueMap<String, String>header = new LinkedMultiValueMap<>();
-        String token = jwtTokenProvider.createToken(member.getUsername(),member.getRole());
+        // MultiValueMap<String, String>header = new LinkedMultiValueMap<>();
+        // header.add("authtoken", jwtTokenProvider.createToken(member.getUsername(), member.getRoles()));
+        String token = jwtTokenProvider.createToken(member.getUsername(),member.getRoles());
         return new ResponseEntity(token, HttpStatus.OK);
     }
 

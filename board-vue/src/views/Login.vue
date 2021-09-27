@@ -45,8 +45,9 @@
                   // email: email,
                   email,
                   // password: password 이멜과 패스워드를 store.js의 signinObj로 넘기겠다
-                  password
+                  password,
                 })"
+                @keyup.enter="login({ email,password})"
             >
               로그인</v-btn>
           </div>

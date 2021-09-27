@@ -20,36 +20,36 @@ public class CommentsController {
 
     private final CommentsService commentsService;
 
-    @PostMapping("/{post_id}")
-    public ResponseEntity storeComments(@PathVariable Long post_id, @RequestBody @Valid CommentsDto commentsDto) {
+    @PostMapping("/{postId}")
+    public ResponseEntity storeComments(@PathVariable Long postId, @RequestBody @Valid CommentsDto commentsDto) {
         org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         String visitorId = authentication.getName();
-        Comments comment = this.commentsService.storeComments(visitorId, post_id, commentsDto);
+        Comments comment = this.commentsService.storeComments(visitorId, postId, commentsDto);
         return ResponseEntity.ok().body(comment);
     }
 
-    @GetMapping("/{post_id}")
-    public ResponseEntity getComments(@PathVariable Long post_id) {
-        List<CommentsDto> commentsDto = this.commentsService.getComments(post_id);
+    @GetMapping("/{postId}")
+    public ResponseEntity getComments(@PathVariable Long postId) {
+        List<CommentsDto> commentsDto = this.commentsService.getComments(postId);
         return ResponseEntity.ok().body(commentsDto);
     }
 
-    @GetMapping("/reply/{comments_id}")
-    public ResponseEntity getCommentReplies(@PathVariable Long comments_id) {
-        List<CommentsDto> commentsDto = this.commentsService.findCommentReplies(comments_id);
+    @GetMapping("/reply/{commentsId}")
+    public ResponseEntity getCommentReplies(@PathVariable Long commentsId) {
+        List<CommentsDto> commentsDto = this.commentsService.findCommentReplies(commentsId);
         return ResponseEntity.ok().body(commentsDto);
     }
 
-    @DeleteMapping("/{comments_id}")
-    public ResponseEntity deletePost(@PathVariable Long comments_id) {
+    @DeleteMapping("/{commentsId}")
+    public ResponseEntity deletePost(@PathVariable Long commentsId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         String visitorId = authentication.getName();
         try {
-            Comments comments = this.commentsService.deleteComment(comments_id, visitorId);
+            Comments comments = this.commentsService.deleteComment(commentsId, visitorId);
             return ResponseEntity.ok(comments);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();

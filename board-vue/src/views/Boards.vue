@@ -19,7 +19,7 @@
       <!--      ></v-data-table>-->
       <v-simple-table
           fixed-header
-          height="300px"
+          height="390px"
       >
         <template v-slot:default>
           <thead>
@@ -34,10 +34,10 @@
               작성자
             </th>
             <th class="text-left">
-              작성일자
+              조회수
             </th>
             <th class="text-left">
-              조회수
+              최근수정일자
             </th>
           </tr>
           </thead>
@@ -113,7 +113,7 @@ export default {
 
     detailPosting: function (postId) {
       this.$router.push({
-        path: `/post/${postId}`
+        path: `/boardDetail/${postId}`
       });
     }
   }
