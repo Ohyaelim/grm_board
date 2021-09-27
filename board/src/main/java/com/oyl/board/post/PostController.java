@@ -16,7 +16,7 @@ public class PostController {
 
     private final PostService postService;
 
-    // 보드 유형 별로 글 작성 
+    // 보드 유형 별로 글 작성
     @PostMapping("/{boardId}")
     public Post create(@RequestBody PostRequest request, @PathVariable Long boardId) {
         return postService.create(request, boardId);

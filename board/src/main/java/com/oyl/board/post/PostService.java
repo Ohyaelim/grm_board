@@ -35,7 +35,7 @@ public class PostService {
                 .nickname(member.getName())
                 .title(request.getTitle())
                 .regDate(LocalDate.now())
-                .member(member)
+                .member(memberRepository.findByName(request.getNickname()))
                 .build());
     }
 

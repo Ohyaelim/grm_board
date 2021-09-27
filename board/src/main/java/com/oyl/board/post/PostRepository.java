@@ -5,17 +5,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findPostsByBoard_BoardId(Long boardId, Pageable pageable);
     Page<Post> findByContentContaining(String keyword,Pageable pageable);
+    // Page<Post> findAllByEmail(String email, Pageable pageable);
+//    Optional<Post> findByPostIdAndIsDeleted(Long post_id, Boolean deleted);
 
     @Transactional
     @Modifying
     @Query("UPDATE Post p SET p.viewCount = p.viewCount + 1 WHERE p.postId = :postId")
-    int updateViewCount(Long postId);
+    int updateViewCount(@Param("postId") Long postId);
 }
