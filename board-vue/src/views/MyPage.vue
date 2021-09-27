@@ -10,7 +10,7 @@
           <span v-if="!update" class="ml-4">{{ name }}</span>
           <div v-if="update" class="ml-4">
             <v-text-field
-                label="이름을 입력해 주세요:D"
+                label="이름을 입력해 주세요 🙌"
                 v-model="name"
             ></v-text-field>
           </div>
@@ -20,12 +20,13 @@
             email
           </span>
           <span v-if="!update" class="ml-4">{{ email }}</span>
-          <div v-if="update" class="ml-4">
-            <v-text-field
-                v-model="email"
-                label="이메일을 입력해 주세요:D"
-            ></v-text-field>
-          </div>
+          <span v-if="update" class="ml-4">{{ email }}</span>
+<!--          <div v-if="update" class="ml-4">-->
+<!--            <v-text-field-->
+<!--                v-model="email"-->
+<!--                label="이메일을 입력해 주세요:D"-->
+<!--            ></v-text-field>-->
+<!--          </div>-->
         </div>
         <div>
           <v-btn
@@ -36,8 +37,13 @@
               elevation="2"
               raised
               rounded
-          >{{ update ? "저장" : "정보 수정" }}</v-btn
-          >
+          >{{ update ? "저장" : "정보 수정" }}</v-btn>
+        </div>
+      </v-card>
+      <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
+        <div class="my-4 row">
+          //내가 쓴 글 보기
+          
         </div>
       </v-card>
     </div>

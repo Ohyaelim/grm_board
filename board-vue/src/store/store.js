@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        userInfo: null,
+        userInfo: localStorage.token === null ? null : localStorage.token,
         isLogin: false,
         isLoginError: false
     },

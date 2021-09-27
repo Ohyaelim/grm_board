@@ -42,6 +42,10 @@ function updatePost(postData, postId){
     return instance.put(`/post/`+ postId, postData);
 }
 
+// function updateInfo(){
+//     return instance.put
+// }
+
 // function getPost(postData){
 //     return instance.get('post/'+postData.post);
 // }

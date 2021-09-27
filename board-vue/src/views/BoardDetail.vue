@@ -8,14 +8,14 @@
     </div>
     <div>
       <v-container>
-        <Comments/>
+<!--        <Comments/>-->
       </v-container>
     </div>
   </div>
 </template>
 
 <script>
-import Comments from "@/components/Comments";
+// import Comments from "@/components/Comments";
 import Detail from "@/components/DetailCard";
 // import {mapState} from "vuex"
 
@@ -23,7 +23,7 @@ export default {
   name: "BoardDetail",
   components: {
     Detail,
-    Comments
+    // Comments
   }
 }
 </script>

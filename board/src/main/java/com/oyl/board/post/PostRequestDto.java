@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostRequest {
+public class PostRequestDto {
 
     private String nickname;
     private String title;

@@ -23,7 +23,7 @@ const rejectAuthUser = (to,from, next) => {
 }
 
 const onlyAuthUser = (to,from, next) => {
-    if (store.state.isLogin === false){
+    if (store.state.userInfo === null){
         //아직 로그인 안 된 유저니까 막자
         alert('로그인이 필요합니다.')
         next('/')

@@ -27,7 +27,7 @@ public class PostService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Post create(PostRequest request, Long boardId) {
+    public Post create(PostRequestDto request, Long boardId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member = (Member) authentication.getPrincipal();
         Board board = boardRepository.findByBoardId(boardId);
@@ -44,7 +44,7 @@ public class PostService {
     }
 
     @Transactional
-    public Post update(PostRequest request, Long postId) {
+    public Post update(PostRequestDto request, Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         post.update(request.toPostEntity());

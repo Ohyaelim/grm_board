@@ -18,13 +18,13 @@ public class PostController {
 
     // 보드 유형 별로 글 작성
     @PostMapping("/{boardId}")
-    public Post create(@RequestBody PostRequest request, @PathVariable Long boardId) {
+    public Post create(@RequestBody PostRequestDto request, @PathVariable Long boardId) {
         return postService.create(request, boardId);
     }
 
     // 글 번호로 글 업뎃
     @PutMapping("/{postId}")
-    public ResponseEntity update(@RequestBody PostRequest request, @PathVariable Long postId) {
+    public ResponseEntity update(@RequestBody PostRequestDto request, @PathVariable Long postId) {
         if (postService.hasRole(postId)) {
             postService.update(request, postId);
             return ResponseEntity.ok().build();

@@ -5,7 +5,6 @@
         📝 공부게시판
         <v-spacer></v-spacer>
         <v-text-field
-            v-model="search"
             append-icon="mdi-magnify"
             label="Search"
             single-line
@@ -58,7 +57,6 @@
       </v-simple-table>
       <div class="text-center">
         <v-pagination
-            v-model="page"
             :length="4"
             circle
         ></v-pagination>
