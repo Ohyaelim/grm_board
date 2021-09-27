@@ -8,6 +8,7 @@ import MyPage from "@/views/MyPage";
 import store from "@/store/store";
 import BoardWrite from "@/views/BoardWrite";
 import BoardDetail from "@/views/BoardDetail";
+import BoardModify from "@/views/BoardModify";
 
 Vue.use(VueRouter)
 
@@ -45,30 +46,36 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        beforeEnter: rejectAuthUser, //라우터로 들어오기 전에 이 함수를 실행시킨다.
+        beforeEnter: rejectAuthUser,
         component: Login
     },
     {
         path: '/mypage',
         name: 'MyPage',
-        beforeEnter: onlyAuthUser, // 아직 구현 안함
+        beforeEnter: onlyAuthUser,
         component: MyPage
     },
     {
         path: '/boards',
         name: 'Boards',
-        component: Boards // 구현중
+        component: Boards
     },
     {
         path: '/boardWrite',
-        name: 'BoardWrite', // 구현중
+        name: 'BoardWrite',
         beforeEnter: onlyAuthUser,
         component: BoardWrite
     },
     {
-        path: '/boardDetail/:postId', // 아직 구현안함함
-       name: 'BoardDetail',
+        path: '/boardDetail/:postId',
+        name: 'BoardDetail',
         component: BoardDetail
+    },
+    {
+        path: '/boardModify/:postId',
+        name: 'BoardModify',
+        beforeEnter: onlyAuthUser,
+        component: BoardModify
     }
 ]
 

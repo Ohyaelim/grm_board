@@ -3,24 +3,24 @@
     <v-container>
       <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
         <v-form ref="form" @submit.prevent="onSubmitForm">
-          <h1 class="text-center">글쓰기 🖋</h1>
+          <h1 class="text-center">수정하기 🖋</h1>
 
-          <v-select
-              label="카테고리"
-              :items="items"
-              v-model="form.board"
-              dense
-              outlined
-              style="width: 145px; height:57px;"
-          ></v-select>
+<!--          <v-select-->
+<!--              label="카테고리"-->
+<!--              :items="items"-->
+<!--              v-model="post.boardType"-->
+<!--              dense-->
+<!--              outlined-->
+<!--              style="width: 145px; height:57px;"-->
+<!--          ></v-select>-->
           <v-text-field class="mt-5"
                         height="50" label="제목" outlined
-                        v-model="form.title"
+                        v-model="post.title"
                         placeholder="제목을 입력하세요"
           ></v-text-field>
           <v-textarea
               outlined
-              v-model="form.content"
+              v-model="post.content"
               name="input-7-4"
               label="내용"
               placeholder="내용을 입력하세요."
@@ -34,7 +34,7 @@
               dark
               type="submit"
           >
-            글쓰기
+            수정!!
           </v-btn>
         </v-form>
       </v-card>
@@ -43,41 +43,42 @@
 </template>
 
 <script>
-import {createPost} from "@/apis";
+import {updatePost} from "@/apis";
 
 export default {
-  name: "BoardWrite",
-  data() {
+  name: "BoardModify",
+  beforeCreate() {
+    let postId = Number(this.$route.params.postId);
+    this.$axios.get(`/post/${postId}`).then((response) => {
+      console.log(response.data)
+      this.post = response.data;
+    });
+  },
+  data(){
     return {
-      items: [
-        {text: '공지사항', value: 1},
-        {text: '공부게시판', value: 2},
-        {text: '질문게시판', value: 3},
-      ],
-      form: {
-        title: '',
-        content: '',
-        board: null,
-      },
+      post: {
+
+      }
     }
   },
-  methods:{
-    async onSubmitForm() {
+  methods: {
+    async onSubmitForm(){
       const postData = {
-        title: this.form.title,
-        content: this.form.content,
-        board: this.form.board
+        // post: this.post.postId,
+        title: this.post.title,
+        content: this.post.content,
       };
 
-      const response = await createPost(postData);
+      // this.$axios.put(`post/`+ this.post.postId, postData)
+
+      const response = await updatePost(postData, this.post.postId);
       if (response.status == 200) {
-        alert(' 정상적으로 등록되었습니다^^');
+        alert(' 정상적으로 수정되었습니다^^');
         await this.$router.push('/boards');
       } else {
         alert(response.data);
       }
     },
-
   }
 }
 </script>
