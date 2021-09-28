@@ -42,7 +42,7 @@
           </thead>
           <tbody>
           <tr
-              v-for="item in datas"
+              v-for="item in datas.content"
               :key="item.postId"
               @click = "detailPosting(item.postId)"
           >
@@ -57,9 +57,12 @@
       </v-simple-table>
       <div class="text-center">
         <v-pagination
-            :length="4"
-            circle
-        ></v-pagination>
+            v-model="currentPage"
+            :length="this.datas.totalPages"
+            color="#1A237E"
+            @input="handlePageChange"
+            circle>
+        </v-pagination>
       </div>
     </v-card>
     <v-col class="text-right">
@@ -90,9 +93,10 @@ export default {
   },
   data() {
     return {
+      currentPage: 1,
       datas:[
       ]
-    };
+    }
   },
 
   created () {
@@ -102,7 +106,8 @@ export default {
     postList(boardId) {
       this.$axios.get(`post/list/${boardId}`)
           .then((res) => {
-            this.datas = res.data.content;
+            this.datas = res.data;
+            console.log(res.data)
           })
           .then((err) => {
             console.log(err);
@@ -113,7 +118,23 @@ export default {
       this.$router.push({
         path: `/boardDetail/${postId}`
       });
-    }
+    },
+    computed: {
+      rows() {
+        return this.datas.length
+      }
+    },
+    handlePageChange(value) {
+      this.currentPage=value
+      this.$axios.get(`post/list/1`+'?page='+(value-1))
+          .then((res) => {
+            this.datas = res.data;
+            console.log(res.data)
+          })
+          .then((err) => {
+            console.log(err);
+          })
+    },
   }
 }
 </script>

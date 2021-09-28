@@ -1,6 +1,14 @@
 <template>
   <div>
     <h1>My page</h1>
+    <v-row
+        align="right"
+        justify="space-around"
+    >
+      <v-btn depressed>
+        회원탈퇴
+      </v-btn>
+    </v-row>
     <div>
       <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
         <div class="my-4 row">
@@ -40,10 +48,10 @@
           >{{ update ? "저장" : "정보 수정" }}</v-btn>
         </div>
       </v-card>
+
       <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
         <div class="my-4 row">
           //내가 쓴 글 보기
-          
         </div>
       </v-card>
     </div>
@@ -70,6 +78,7 @@ export default {
     saveMyInfo() {
       // api 요청 및 화면 상태 보정
       //
+
       this.update = false;
     },
     ...mapActions(["getMemberInfo"]),
