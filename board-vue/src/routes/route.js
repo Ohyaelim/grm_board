@@ -9,6 +9,7 @@ import store from "@/store/store";
 import BoardWrite from "@/views/BoardWrite";
 import BoardDetail from "@/views/BoardDetail";
 import BoardModify from "@/views/BoardModify";
+import MyBoards from "@/views/MyBoards";
 
 Vue.use(VueRouter)
 
@@ -76,6 +77,12 @@ const routes = [
         name: 'BoardModify',
         beforeEnter: onlyAuthUser,
         component: BoardModify
+    },
+    {
+        path: '/mypage/myBoards',
+        name: 'MyBoards',
+        beforeEnter: onlyAuthUser,
+        component: MyBoards
     }
 ]
 

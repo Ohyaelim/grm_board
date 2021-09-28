@@ -7,6 +7,10 @@ spring:
   devtools:
     livereload:
       enabled: true
+  data:
+    web:
+      pageable:
+        default-page-size: 8
 
 
 
@@ -19,3 +23,4 @@ spring:
       hibernate:
         format_sql: true
         show-sql: true
+

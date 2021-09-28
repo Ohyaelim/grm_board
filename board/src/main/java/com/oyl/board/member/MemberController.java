@@ -9,9 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,13 +49,24 @@ public class MemberController {
         SignUpDto memberResponse = memberService.findByUserEmail(member.getEmail());
         return ResponseEntity.ok(memberResponse);
     }
-    @PutMapping(value = "/mypage")
-    public ResponseEntity<Void> update(@RequestParam String nickname) {
+    @PutMapping("/update")
+    public ResponseEntity<Void> update(@RequestParam String name) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member  = (Member) authentication.getPrincipal();
-        memberService.update(nickname, member);
+        memberService.update(name, member);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/dismembership/{memberId}")
+    public ResponseEntity dismembership(@PathVariable Long memberId){
+        try {
+            memberService.dismembership(memberId);
+            return ResponseEntity.ok().build();
+        }catch (IllegalStateException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(CEmailSigninFailedException.class)

@@ -20,13 +20,6 @@ function getMyInfoApi() {
     return instance.get("auth/mypage");
 }
 
-// function postList(){
-//     return instance.get('posts/1');
-// }
-//
-// function myPage(userData){
-//     return instance.get('auth/mypage', userData);
-// }
 
 function createPost(postData){
     console.log(localStorage.getItem('token'));
@@ -42,12 +35,13 @@ function updatePost(postData, postId){
     return instance.put(`/post/`+ postId, postData);
 }
 
-// function updateInfo(){
-//     return instance.put
-// }
+function updateMyPage(infoData){
+    return instance.put(`/auth/update`, infoData);
+}
 
-// function getPost(postData){
-//     return instance.get('post/'+postData.post);
-// }
+function createComment(commentData, postId){
+    return instance.post(`/comments/`+postId, commentData);
+}
 
-export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost};
+
+export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment};

@@ -29,9 +29,9 @@ public class CommentsService {
     private final ModelMapper modelMapper;
 
     @Transactional
-    public Comments storeComments(String visitorID, Long postId, CommentsDto commentsDto) {
+    public Comments storeComments(String email, Long postId, CommentsDto commentsDto) {
         Long parentId = commentsDto.getParentsId();
-        Member member = memberRepository.findByEmail(visitorID).orElseThrow(MemberNotFoundException::new);
+        Member member = memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
         Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
 
         Comments comments = Comments.builder()
@@ -53,8 +53,8 @@ public class CommentsService {
 
     @Transactional
     public List<CommentsDto> getComments(Long postId) {
-        List<Comments> comments = commentsRepository.findCommentsByParentAndPost_PostId(null, postId);
-        List<CommentsDto> commentsDtos = new ArrayList<CommentsDto>();
+        List<Comments> comments = commentsRepository.findCommentsByParentAndPostPostId(null, postId);
+        List<CommentsDto> commentsDtos = new ArrayList<>();
         for (Comments dto : comments) {
             commentsDtos.add(modelMapper.map(dto, CommentsDto.class));
         }
@@ -62,8 +62,8 @@ public class CommentsService {
     }
     @Transactional
     public List<CommentsDto> findCommentReplies(Long commentsId) {
-        Collection<Comments> comments = commentsRepository.findCommentsByParent_CommentsId(commentsId);
-        List<CommentsDto> commentsDtos = new ArrayList<CommentsDto>();
+        Collection<Comments> comments = commentsRepository.findCommentsByParentCommentsId(commentsId);
+        List<CommentsDto> commentsDtos = new ArrayList<>();
         for (Object dto : comments) {
             commentsDtos.add(modelMapper.map(dto, CommentsDto.class));
         }
@@ -72,7 +72,7 @@ public class CommentsService {
 
     @Transactional
     public Comments deleteComment(Long commentsId, String visitorId) {
-        Comments comments = commentsRepository.findByCommentsIdAndMember_Email(commentsId, visitorId).orElseThrow(CommentsNotFoundException::new);
+        Comments comments = commentsRepository.findByCommentsIdAndMemberEmail(commentsId, visitorId).orElseThrow(CommentsNotFoundException::new);
         comments.setIsDeleted(Boolean.TRUE);
         return commentsRepository.save(comments);
     }

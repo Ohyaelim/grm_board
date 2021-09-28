@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +54,16 @@ public class PostController {
     // 보드 유형별로 보여주기 + 페이징
     @GetMapping("/list/{boardId}")
     public Page<Post> findPostList(@PathVariable Long boardId,
-                                   @RequestParam(value="keyword", required = false) String keyword, Pageable pageable){
+                                   @RequestParam(value="keyword", required = false) String keyword, @PageableDefault(sort = "postId" , direction = Sort.Direction.DESC) Pageable pageable){
 
         return postService.findPostList(boardId,keyword,pageable);
+    }
+
+    // 보드 유저별로 + 페이징
+    @GetMapping("/list/mypage/{memberId}")
+    public Page<Post> findPostUserList(@PathVariable Long memberId,
+                                   @RequestParam(value="keyword", required = false) String keyword, @PageableDefault(sort = "regDate" , direction = Sort.Direction.DESC) Pageable pageable){
+
+        return postService.findPostUserList(memberId,keyword,pageable);
     }
 }

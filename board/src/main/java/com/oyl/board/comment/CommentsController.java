@@ -22,7 +22,7 @@ public class CommentsController {
 
     @PostMapping("/{postId}")
     public ResponseEntity storeComments(@PathVariable Long postId, @RequestBody @Valid CommentsDto commentsDto) {
-        org.springframework.security.core.Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         String visitorId = authentication.getName();
@@ -47,9 +47,9 @@ public class CommentsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null)
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        String visitorId = authentication.getName();
+        String email = authentication.getName();
         try {
-            Comments comments = this.commentsService.deleteComment(commentsId, visitorId);
+            Comments comments = this.commentsService.deleteComment(commentsId, email);
             return ResponseEntity.ok(comments);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();

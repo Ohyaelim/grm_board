@@ -1,14 +1,7 @@
 <template>
   <div>
     <h1>My page</h1>
-    <v-row
-        align="right"
-        justify="space-around"
-    >
-      <v-btn depressed>
-        회원탈퇴
-      </v-btn>
-    </v-row>
+
     <div>
       <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
         <div class="my-4 row">
@@ -51,20 +44,67 @@
 
       <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
         <div class="my-4 row">
-          //내가 쓴 글 보기
+
+          <v-btn
+              class="mb-5"
+              elevation="2"
+              raised
+              rounded
+              color="#536DF"
+              width="300px"
+              to="/mypage/myBoards"
+          >내가 쓴 글 보기</v-btn>
         </div>
       </v-card>
     </div>
+    <v-row justify="center">
+      <v-dialog
+          v-model="dialog"
+          persistent
+          max-width="290"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+              depressed
+              v-bind="attrs"
+              v-on="on"
+          >
+            G.S.W.M 탈퇴
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title class="text-h5">
+            정말 탈퇴하실 건가요?
+          </v-card-title>
+          <v-card-text align="center"><br>저희와 열심히 공부해요... <br>그래도 탈퇴를 원하시면 <a href="mailto:yaelim1122@gooroomee.com">yaelim1122@gooroomee.com</a>으로
+            <br>메일을 보내주세요.<br>탈퇴처리 도와드리겠습니다.😢</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+                color="#8852a6"
+                text
+                @click="dialog = false"
+            >
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+// import {registerUser} from "@/apis";
+// import {updateMyPage} from "@/apis";
 
 export default {
   name: "MyPage",
   data() {
     return {
+      dialog: false,
       update: false,
       name: "로딩 중...",
       email: "로딩 중...",
@@ -77,11 +117,20 @@ export default {
     },
     saveMyInfo() {
       // api 요청 및 화면 상태 보정
+      // const response = await registerUser(userData);
+      // console.log(response)
+      // if (response.status == 200) {
+      //   alert('환영합니다.');
+      //   await this.$router.push('/login');
+      // } else {
+      //   alert(response.data);
+      // }
       //
 
       this.update = false;
     },
     ...mapActions(["getMemberInfo"]),
+
   },
   async beforeMount() {
     console.log(this.$store.state);

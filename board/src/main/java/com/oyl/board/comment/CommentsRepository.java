@@ -10,11 +10,11 @@ import java.util.Optional;
 // 어노테이션 필요 없다. Jparepo extends 하면 알아서 가져와줘서 bean 생성가능
 public interface CommentsRepository extends JpaRepository<Comments, Long> {
 
-    List<Comments> findCommentsByParentAndPost_PostId(Long parentId, Long id);
+    List<Comments> findCommentsByParentAndPostPostId(Long parentId, Long id);
 
-    Long countAllByPost_PostId(Long postId);
+    Long countAllByPostPostId(Long postId);
 
-    Optional<Comments> findByCommentsIdAndMember_Email(Long comments_id, String visitorId);
+    Optional<Comments> findByCommentsIdAndMemberEmail(Long comments_id, String visitorId);
 
     @Query(value = "SELECT c FROM Comments as c WHERE c.parent is NULL and c.post.postId = ?1")
     List<Comments> findComments(Long postId);
@@ -22,5 +22,5 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
     @Query(value = "SELECT * FROM t_comment c WHERE c.parents_id = ?1", nativeQuery = true)
     Collection<Comments> getCommentReplies(Long parentId);
 
-    List<Comments> findCommentsByParent_CommentsId(Long parentId);
+    List<Comments> findCommentsByParentCommentsId(Long parentId);
 }
