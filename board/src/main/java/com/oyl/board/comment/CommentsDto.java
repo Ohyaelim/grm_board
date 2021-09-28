@@ -17,4 +17,6 @@ public class CommentsDto {
     private Boolean isDeleted;
     private LocalDateTime createdAt;
     private Long parentsId;
+
+
 }

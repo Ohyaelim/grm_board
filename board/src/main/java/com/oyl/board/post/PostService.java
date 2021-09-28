@@ -61,15 +61,17 @@ public class PostService {
     }
 
     public PostDetailResponse findById(Long postId) {
-        postRepository.updateViewCount(postId);
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        postRepository.updateViewCount(postId);
+
         return new PostDetailResponse(post);
     }
 
-    public Page<Post> findPostList(Long categoryId, String keyword, Pageable pageable) {
+
+    public Page<Post> findPostList(Long boardId, String keyword, Pageable pageable) {
         if (keyword == null) {
-            return postRepository.findPostsByBoard_BoardId(categoryId, pageable);
+            return postRepository.findPostsByBoardBoardId(boardId, pageable);
         } else
             return postRepository.findByContentContaining(keyword, pageable);
 
@@ -91,5 +93,12 @@ public class PostService {
                 return true;
         }
         return false;
+    }
+
+    public Page<Post> findPostUserList(Long memberId, String keyword, Pageable pageable) {
+        if (keyword == null) {
+            return postRepository.findPostsByBoardBoardId(memberId, pageable);
+        } else
+            return postRepository.findByContentContaining(keyword, pageable);
     }
 }

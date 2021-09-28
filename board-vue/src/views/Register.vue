@@ -98,6 +98,7 @@ export default {
       };
 
       const response = await registerUser(userData);
+      console.log(response)
       if (response.status == 200) {
         alert('환영합니다.');
         await this.$router.push('/login');

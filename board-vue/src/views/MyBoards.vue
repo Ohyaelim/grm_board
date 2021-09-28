@@ -2,20 +2,9 @@
   <v-container>
     <v-card >
       <v-card-title>
-        📝 공부게시판
+        📝 내가 쓴 글!
         <v-spacer></v-spacer>
-        <v-text-field
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-        ></v-text-field>
       </v-card-title>
-      <!--      <v-data-table-->
-      <!--          :headers="headers"-->
-      <!--          :items="desserts"-->
-      <!--          :search="search"-->
-      <!--      ></v-data-table>-->
       <v-simple-table
           fixed-header
           height="390px"
@@ -42,7 +31,7 @@
           </thead>
           <tbody>
           <tr
-              v-for="item in datas.content"
+              v-for="item in datas"
               :key="item.postId"
               @click = "detailPosting(item.postId)"
           >
@@ -55,37 +44,11 @@
           </tbody>
         </template>
       </v-simple-table>
-      <div class="text-center">
-        <v-pagination
-            v-model="currentPage"
-            :length="this.datas.totalPages"
-            color="#1A237E"
-            @input="handlePageChange"
-            circle>
-        </v-pagination>
-      </div>
     </v-card>
-    <v-col class="text-right">
-      <v-btn
-          v-if= "isLogin===true"
-          align="right"
-          class="ma-1"
-          outlined
-          small
-          fab
-          color="#8852a6"
-          to="/boardWrite"
-      >
-
-        <v-icon>mdi-pencil</v-icon>
-      </v-btn>
-    </v-col>
   </v-container>
 </template>
-
 <script>
 import {mapState} from "vuex"
-
 export default {
   name: "Boards",
   computed: {
@@ -96,49 +59,27 @@ export default {
       currentPage: 1,
       datas:[
       ]
-    }
+    };
   },
-
-  created () {
-    this.postList(1)
+  created() {// TODO: 멤버아이디 갖구와
+   this.postList(1)
   },
   methods: {
-    postList(boardId) {
-      this.$axios.get(`post/list/${boardId}`)
+    postList(memberId) {
+      this.$axios.get(`/post/list/mypage/${memberId}`)
           .then((res) => {
-            this.datas = res.data;
             console.log(res.data)
+            this.datas = res.data.content;
           })
           .then((err) => {
             console.log(err);
           })
     },
-
     detailPosting: function (postId) {
       this.$router.push({
         path: `/boardDetail/${postId}`
       });
-    },
-    computed: {
-      rows() {
-        return this.datas.length
-      }
-    },
-    handlePageChange(value) {
-      this.currentPage=value
-      this.$axios.get(`post/list/1`+'?page='+(value-1))
-          .then((res) => {
-            this.datas = res.data;
-            console.log(res.data)
-          })
-          .then((err) => {
-            console.log(err);
-          })
-    },
+    }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

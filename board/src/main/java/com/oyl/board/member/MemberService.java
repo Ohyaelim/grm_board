@@ -55,8 +55,8 @@ public class MemberService {
     }
 
     @Transactional
-    public void dismembership(Long member_id){
-        Member member = memberRepository.findById(member_id).orElseThrow(MemberNotFoundException::new);
+    public void dismembership(Long memberId){
+        Member member = memberRepository.findById(memberId).orElseThrow(MemberNotFoundException::new);
         member.delete();
     }
 

@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "t_comment")
 public class Comments extends BaseTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comments_id")
@@ -29,26 +30,29 @@ public class Comments extends BaseTimeEntity {
     @Setter
     private Boolean isDeleted = Boolean.FALSE;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    // TODO: @ManyToOne(fetch = FetchType.LAZY)
+
+    @Setter
+    @ManyToOne
     @JoinColumn(name = "parents_id")
     private Comments parent;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", orphanRemoval = true)
-    private List<Comments> children = new ArrayList<Comments>();
+    @OneToMany
+    private List<Comments> children = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
-    public void setParent(Comments parent) {
-        this.parent = parent;
-        if (!parent.getChildren().contains(this)) {
-            parent.getChildren().add(this);
-        }
-    }
+//
+//    public void setParent(Comments parent) {
+//        this.parent = parent;
+////        if (!parent.getChildren().contains(this)) {
+////            parent.getChildren().add(this);
+////        }
+//    }
 
 }
