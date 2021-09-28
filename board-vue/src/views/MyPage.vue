@@ -44,6 +44,7 @@
 
       <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
         <div class="my-4 row">
+
           <v-btn
               class="mb-5"
               elevation="2"
@@ -52,7 +53,7 @@
               color="#536DF"
               width="300px"
               to="/mypage/myBoards"
-          >내가 쓴 글 보기</v-btn><br/>
+          >내가 쓴 글 보기</v-btn>
         </div>
       </v-card>
     </div>
