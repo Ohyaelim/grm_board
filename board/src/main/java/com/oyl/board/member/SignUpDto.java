@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @AllArgsConstructor
@@ -12,14 +11,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Builder
 public class SignUpDto {
     String email;
-    String name;
+    String nickname;
     String password;
+    Long memberId;
 
     public static SignUpDto profile(Member member) {
         return SignUpDto.builder()
+                .memberId(member.getMemberId())
                 .password(member.getPassword())
-                .name(member.getName())
+                .nickname(member.getNickname())
                 .email(member.getEmail())
                 .build();
     }
 }
+

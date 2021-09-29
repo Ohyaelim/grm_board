@@ -14,8 +14,8 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-
     Page<Post> findPostsByBoardBoardId(Long boardId, @PageableDefault(size = 5) Pageable pageable);
+    Page<Post> findPostsByMemberMemberId(Long memberId, @PageableDefault(size = 5) Pageable pageable);
     Page<Post> findByContentContaining(String keyword,@PageableDefault(size = 5) Pageable pageable);
     // Page<Post> findAllByEmail(String email, Pageable pageable);
 //    Optional<Post> findByPostIdAndIsDeleted(Long post_id, Boolean deleted);

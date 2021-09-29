@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +35,7 @@ public class PostService {
         return postRepository.save(Post.builder()
                 .board(board)
                 .content(request.getContent())
-                .nickname(member.getName())
+                .nickname(member.getNickname())
                 .title(request.getTitle())
                 .regDate(LocalDate.now())
                 .member(member)
@@ -60,16 +61,16 @@ public class PostService {
         return post;
     }
 
-    public PostDetailResponse findById(Long postId) {
+    public PostDetailResponseDto findById(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         postRepository.updateViewCount(postId);
 
-        return new PostDetailResponse(post);
+        return new PostDetailResponseDto(post);
     }
 
 
-    public Page<Post> findPostList(Long boardId, String keyword, Pageable pageable) {
+    public Page<Post> findPostList(Long boardId, String keyword, @PageableDefault(size = 5) Pageable pageable) {
         if (keyword == null) {
             return postRepository.findPostsByBoardBoardId(boardId, pageable);
         } else
@@ -97,7 +98,7 @@ public class PostService {
 
     public Page<Post> findPostUserList(Long memberId, String keyword, Pageable pageable) {
         if (keyword == null) {
-            return postRepository.findPostsByBoardBoardId(memberId, pageable);
+            return postRepository.findPostsByMemberMemberId(memberId, pageable);
         } else
             return postRepository.findByContentContaining(keyword, pageable);
     }

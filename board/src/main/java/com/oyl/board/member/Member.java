@@ -19,29 +19,23 @@ import java.util.stream.Collectors;
 @Table(name = "t_member")
 public class Member extends BaseTimeEntity implements UserDetails{
     private static final String DELETED_SIGN = "DELETED";
-//
-//    @Builder
-//    public Member(Long member_id, String email, String name, String password, List<String> roles) {
-//        this.member_id = member_id;
-//        this.email = email;
-//        this.name = name;
-//        this.password = password;
-//        this.roles = roles;
-//    }
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long memberId;
 
+    @Column(length = 255)
     private String email;
 
-    private String name;
+    @Column(length = 50)
+    private String nickname;
 
+    @Column(length = 100)
     private String password;
 
     public void delete() {
         email = DELETED_SIGN;
-        name = DELETED_SIGN;
+        nickname = DELETED_SIGN;
         password = DELETED_SIGN;
     }
 
@@ -79,7 +73,7 @@ public class Member extends BaseTimeEntity implements UserDetails{
         return false;
     }
 
-    public void update(String name) {
-        this.name = name;
+    public void update(String nickname) {
+        this.nickname = nickname;
     }
 }

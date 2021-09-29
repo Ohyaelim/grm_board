@@ -36,7 +36,8 @@ function updatePost(postData, postId){
 }
 
 function updateMyPage(infoData){
-    return instance.put(`/auth/update`, infoData);
+    return instance.put(`/auth/update?name=`+infoData).then(()=>
+            window.alert("수정완료!!"));
 }
 
 function createComment(commentData, postId){
