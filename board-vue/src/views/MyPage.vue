@@ -50,7 +50,9 @@
             @click="goMyBoard(infoData.memberId)"
         >내가 쓴 글 보기</v-btn>
 
+
       </v-row>
+
     </div>
     <v-row justify="center">
       <v-dialog
