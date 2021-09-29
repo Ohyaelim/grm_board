@@ -1,16 +1,16 @@
 <template>
-  <div class="ma-3" style="height: 300px" @submit.prevent="onSubminForm">
+  <div class="ma-3" style="height: 300px" >
 
     <v-textarea
         outlined
         clearable
         clear-icon="mdi-close"
         placeholder="댓글을 입력하세요."
-        v-model="content"
+        v-model="form.comments"
         rows="4"
     />
     <div class="text-right">
-      <v-btn outlined type="submit">댓글 등록</v-btn>
+      <v-btn outlined @click="onSubmitForm">댓글 등록</v-btn>
     </div>
   </div>
 </template>
@@ -36,17 +36,18 @@ export default {
     ...mapState(['isLogin'])
   },
   methods: {
-    async onSubminForm(){
+    async onSubmitForm(){
       const commentData={
         comments: this.form.comments
       };
-      const response = await createComment(commentData);
+      const response = await createComment(commentData, this.$route.params.postId);
       if (response.status == 200){
         console.log(response.data)
-        await this.$router.push(`/boardDetail/${response.data}`);
+        // await this.$router.push(`/boardDetail/${this.$route.params.postId}`);
       }else {
         alert(response.data);
       }
+      this.fetchCommentData()
     }
 
   }

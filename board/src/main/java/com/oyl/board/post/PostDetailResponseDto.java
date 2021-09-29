@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDetailResponse {
+public class PostDetailResponseDto {
 
 
     private String nickname;
@@ -22,7 +22,7 @@ public class PostDetailResponse {
     private long viewCount;
     private Long postId;
 
-    public PostDetailResponse(Post post){
+    public PostDetailResponseDto(Post post){
         this.nickname = post.getNickname();
         this.title = post.getTitle();
         this.content = post.getContent();

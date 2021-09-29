@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       items: [
-        {text: '공지사항', value: 1}
+        {text: '공부게시판', value: 1}
       ],
       form: {
         title: '',

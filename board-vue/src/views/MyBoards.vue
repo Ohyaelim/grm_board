@@ -19,9 +19,6 @@
               제목
             </th>
             <th class="text-left">
-              작성자
-            </th>
-            <th class="text-left">
               조회수
             </th>
             <th class="text-left">
@@ -37,7 +34,6 @@
           >
             <td>{{ item.postId }}</td>
             <td>{{ item.title }}</td>
-            <td>{{ item.nickname }}</td>
             <td>{{ item.viewCount }}</td>
             <td>{{ item.regDate }}</td>
           </tr>
@@ -48,7 +44,7 @@
   </v-container>
 </template>
 <script>
-import {mapState} from "vuex"
+import {mapActions, mapState} from "vuex"
 export default {
   name: "Boards",
   computed: {
@@ -58,15 +54,20 @@ export default {
     return {
       currentPage: 1,
       datas:[
-      ]
+      ],
+      infoData:{
+        memberId: ''
+      }
     };
   },
-  created() {// TODO: 멤버아이디 갖구와
-   this.postList(1)
+  async created() {// TODO: 멤버아이디 갖구와
+    const myInfo = await this.getMemberInfo();
+    this.infoData.memberId = myInfo.memberId;
+    this.postList()
   },
   methods: {
-    postList(memberId) {
-      this.$axios.get(`/post/list/mypage/${memberId}`)
+    postList() {
+      this.$axios.get(`/post/list/mypage/`+this.$route.params.memberId)
           .then((res) => {
             console.log(res.data)
             this.datas = res.data.content;
@@ -79,7 +80,12 @@ export default {
       this.$router.push({
         path: `/boardDetail/${postId}`
       });
-    }
-  }
+    },
+    ...mapActions(["getMemberInfo"]),
+  },
+  // async beforeMount() {
+  //   const myInfo = await this.getMemberInfo();
+  //   this.infoData.memberId = myInfo.memberId;
+  // },
 }
 </script>

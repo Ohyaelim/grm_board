@@ -1,14 +1,16 @@
 <template>
   <v-container>
-    <v-card >
+    <v-card STYLE="margin-top: 100">
       <v-card-title>
         📝 공부게시판
         <v-spacer></v-spacer>
         <v-text-field
+            v-model = "keyword"
             append-icon="mdi-magnify"
-            label="Search"
+            label="검색어를 입력하세요."
             single-line
             hide-details
+            @click="searchPost(keyword)"
         ></v-text-field>
       </v-card-title>
       <!--      <v-data-table-->

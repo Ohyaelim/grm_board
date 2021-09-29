@@ -47,14 +47,14 @@ public class PostController {
 
     // 글 번호로 글 찾기
     @GetMapping("/{postId}")
-    public PostDetailResponse findById(@PathVariable Long postId){
+    public PostDetailResponseDto findById(@PathVariable Long postId){
         return postService.findById(postId);
     }
 
     // 보드 유형별로 보여주기 + 페이징
     @GetMapping("/list/{boardId}")
     public Page<Post> findPostList(@PathVariable Long boardId,
-                                   @RequestParam(value="keyword", required = false) String keyword, @PageableDefault(sort = "postId" , direction = Sort.Direction.DESC) Pageable pageable){
+                                   @RequestParam(value="keyword", required = false) String keyword, @PageableDefault(size = 7, sort = "postId" , direction = Sort.Direction.DESC) Pageable pageable){
 
         return postService.findPostList(boardId,keyword,pageable);
     }
@@ -62,8 +62,9 @@ public class PostController {
     // 보드 유저별로 + 페이징
     @GetMapping("/list/mypage/{memberId}")
     public Page<Post> findPostUserList(@PathVariable Long memberId,
-                                   @RequestParam(value="keyword", required = false) String keyword, @PageableDefault(sort = "regDate" , direction = Sort.Direction.DESC) Pageable pageable){
+                                   @RequestParam(value="keyword", required = false) String keyword, @PageableDefault( sort = "regDate" , direction = Sort.Direction.DESC) Pageable pageable){
 
         return postService.findPostUserList(memberId,keyword,pageable);
     }
+
 }

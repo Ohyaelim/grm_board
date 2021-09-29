@@ -3,20 +3,21 @@
     <v-app-bar app class="white--text" color="#8852a6" v-if="!drawer">
 
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="white"/>
-      <v-btn to="/" icon>
-        <v-icon>
-          🖊
-        </v-icon>
-      </v-btn>
-
-      <v-toolbar-title>
-        <span v-if="!drawer" t>Get Study With Me 🎠</span>
+      <v-toolbar-title to="/">
+        <span v-if="!drawer">
+          <v-btn depressed color="#8852a6" to="/">Get Study With Me 🎠</v-btn>
+        </span>
       </v-toolbar-title>
 
       <v-spacer/>
 
+      <v-btn v-if="isLogin" to="/boardWrite" icon>
+        <v-icon>
+          🖋
+        </v-icon>
+      </v-btn>
       <v-btn v-if="isLogin" to="/myPage" icon>
-          👋MY
+          🙋‍♀️MY
       </v-btn>
       <v-btn v-else to="/login" icon>
         👋Login

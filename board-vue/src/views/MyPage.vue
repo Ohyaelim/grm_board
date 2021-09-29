@@ -8,11 +8,11 @@
           <span class="font-weight-black">
             이름
           </span>
-          <span v-if="!update" class="ml-4">{{ name }}</span>
+          <span v-if="!update" class="ml-4">{{ infoData.nickname }}</span>
           <div v-if="update" class="ml-4">
             <v-text-field
                 label="이름을 입력해 주세요 🙌"
-                v-model="name"
+                v-model="infoData.nickname"
             ></v-text-field>
           </div>
         </div>
@@ -20,14 +20,9 @@
           <span class="font-weight-black">
             email
           </span>
-          <span v-if="!update" class="ml-4">{{ email }}</span>
-          <span v-if="update" class="ml-4">{{ email }}</span>
-<!--          <div v-if="update" class="ml-4">-->
-<!--            <v-text-field-->
-<!--                v-model="email"-->
-<!--                label="이메일을 입력해 주세요:D"-->
-<!--            ></v-text-field>-->
-<!--          </div>-->
+          <span v-if="!update" class="ml-4">{{ infoData.email }}</span>
+          <span v-if="update" class="ml-4">{{ infoData.email }}</span>
+
         </div>
         <div>
           <v-btn
@@ -41,20 +36,21 @@
           >{{ update ? "저장" : "정보 수정" }}</v-btn>
         </div>
       </v-card>
+      <v-row
+          align="center"
+          justify="space-around"
+      >
+        <v-btn
+            class="mb-5"
+            elevation="2"
+            raised
+            rounded
+            color="#536DF"
+            width="300px"
+            @click="goMyBoard(infoData.memberId)"
+        >내가 쓴 글 보기</v-btn>
 
-      <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
-        <div class="my-4 row">
-          <v-btn
-              class="mb-5"
-              elevation="2"
-              raised
-              rounded
-              color="#536DF"
-              width="300px"
-              to="/mypage/myBoards"
-          >내가 쓴 글 보기</v-btn><br/>
-        </div>
-      </v-card>
+      </v-row>
     </div>
     <v-row justify="center">
       <v-dialog
@@ -96,6 +92,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import {updateMyPage} from "@/apis";
 // import {registerUser} from "@/apis";
 // import {updateMyPage} from "@/apis";
 
@@ -103,10 +100,14 @@ export default {
   name: "MyPage",
   data() {
     return {
+      infoData: {
+        nickname: "로딩 중...",
+        email: "로딩 중..",
+        memberId: ''
+      },
+
       dialog: false,
       update: false,
-      name: "로딩 중...",
-      email: "로딩 중...",
     };
   },
   methods: {
@@ -116,27 +117,28 @@ export default {
     },
     saveMyInfo() {
       // api 요청 및 화면 상태 보정
-      // const response = await registerUser(userData);
-      // console.log(response)
-      // if (response.status == 200) {
-      //   alert('환영합니다.');
-      //   await this.$router.push('/login');
-      // } else {
-      //   alert(response.data);
-      // }
-      //
-
+      updateMyPage(this.infoData.nickname);
       this.update = false;
     },
     ...mapActions(["getMemberInfo"]),
+
+    goMyBoard(memberId) {
+      this.$router.push({
+        path: `/mypage/myBoards/`+ memberId
+      });
+
+  },
 
   },
   async beforeMount() {
     console.log(this.$store.state);
     console.log("beforeCreate >> ", this.getMemberInfo);
+
     const myInfo = await this.getMemberInfo();
-    this.name = myInfo.name ? myInfo.name : "undefined";
-    this.email = myInfo.email;
+    // console.log(myInfo.memberId)
+    this.infoData.nickname = myInfo.nickname ? myInfo.nickname : "다시 로그인 해주세요 😉";
+    this.infoData.email = myInfo.email;
+    this.infoData.memberId = myInfo.memberId;
   },
 };
 </script>

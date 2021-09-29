@@ -7,6 +7,7 @@ import com.oyl.board.common.BaseTimeEntity;
 import com.oyl.board.member.Member;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -30,7 +31,7 @@ public class Post {
     @Column(name = "title", length = 100, nullable = false)
     private String title;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 1000)
     private String content;
 
     @Column(name = "view_count")

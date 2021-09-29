@@ -10,11 +10,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "t_board")
 public class Board {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name ="board_id")
     private Long boardId;
 
     @Column(name = "board_type" ,nullable = false, length=50)
+    @Setter
     private String boardType;
 }

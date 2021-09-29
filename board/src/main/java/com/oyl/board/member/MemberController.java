@@ -36,8 +36,6 @@ public class MemberController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody SignInDto signinDto){
         Member member= memberService.signin(signinDto);
-        // MultiValueMap<String, String>header = new LinkedMultiValueMap<>();
-        // header.add("authtoken", jwtTokenProvider.createToken(member.getUsername(), member.getRoles()));
         String token = jwtTokenProvider.createToken(member.getUsername(),member.getRoles());
         return new ResponseEntity(token, HttpStatus.OK);
     }
@@ -54,7 +52,7 @@ public class MemberController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member  = (Member) authentication.getPrincipal();
         memberService.update(name, member);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @PutMapping("/dismembership/{memberId}")

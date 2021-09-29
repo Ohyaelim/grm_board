@@ -79,7 +79,7 @@ const routes = [
         component: BoardModify
     },
     {
-        path: '/mypage/myBoards',
+        path: '/mypage/myBoards/:memberId',
         name: 'MyBoards',
         beforeEnter: onlyAuthUser,
         component: MyBoards

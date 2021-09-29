@@ -21,7 +21,7 @@ public class MemberService {
         if (memberRepository.findByEmail(signUpDto.getEmail()).isEmpty()){
             Member member = Member.builder()
                     .email(signUpDto.getEmail())
-                    .name(signUpDto.getName())
+                    .nickname(signUpDto.getNickname())
                     .password(passwordEncoder.encode(signUpDto.getPassword()))
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build();
