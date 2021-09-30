@@ -32,7 +32,6 @@ public class PostController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-
     }
 
     // 글 번호로 글 삭제

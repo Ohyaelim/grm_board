@@ -61,6 +61,7 @@ public class PostService {
         return post;
     }
 
+    @Transactional
     public PostDetailResponseDto findById(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));

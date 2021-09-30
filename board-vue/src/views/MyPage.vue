@@ -50,7 +50,9 @@
             @click="goMyBoard(infoData.memberId)"
         >내가 쓴 글 보기</v-btn>
 
+
       </v-row>
+
     </div>
     <v-row justify="center">
       <v-dialog
@@ -93,8 +95,6 @@
 <script>
 import { mapActions } from "vuex";
 import {updateMyPage} from "@/apis";
-// import {registerUser} from "@/apis";
-// import {updateMyPage} from "@/apis";
 
 export default {
   name: "MyPage",
@@ -127,7 +127,7 @@ export default {
         path: `/mypage/myBoards/`+ memberId
       });
 
-  },
+    },
 
   },
   async beforeMount() {
@@ -135,7 +135,6 @@ export default {
     console.log("beforeCreate >> ", this.getMemberInfo);
 
     const myInfo = await this.getMemberInfo();
-    // console.log(myInfo.memberId)
     this.infoData.nickname = myInfo.nickname ? myInfo.nickname : "다시 로그인 해주세요 😉";
     this.infoData.email = myInfo.email;
     this.infoData.memberId = myInfo.memberId;

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +60,11 @@ public class CommentsService {
             commentsDtos.add(modelMapper.map(dto, CommentsDto.class));
         }
         return commentsDtos;
+//        return commentsRepository.findCommentsByParentAndPostPostId(null, postId).stream()
+//                .map(CommentsDto::new)
+//                .collect(Collectors.toList());
     }
+
     @Transactional
     public List<CommentsDto> findCommentReplies(Long commentsId) {
         Collection<Comments> comments = commentsRepository.findCommentsByParentCommentsId(commentsId);

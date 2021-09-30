@@ -18,5 +18,4 @@ public class CommentsDto {
     private LocalDateTime createdAt;
     private Long parentsId;
 
-
 }

@@ -7,7 +7,7 @@
         <v-text-field
             v-model = "keyword"
             append-icon="mdi-magnify"
-            label="검색어를 입력하세요."
+            label="아직 검색사용이 불가합니다. (빠른 시일 내에 도입예정 🙃)"
             single-line
             hide-details
             @click="searchPost(keyword)"

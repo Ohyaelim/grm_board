@@ -60,7 +60,7 @@ export default {
       }
     };
   },
-  async created() {// TODO: 멤버아이디 갖구와
+  async created() {
     const myInfo = await this.getMemberInfo();
     this.infoData.memberId = myInfo.memberId;
     this.postList()
@@ -83,9 +83,6 @@ export default {
     },
     ...mapActions(["getMemberInfo"]),
   },
-  // async beforeMount() {
-  //   const myInfo = await this.getMemberInfo();
-  //   this.infoData.memberId = myInfo.memberId;
-  // },
+
 }
 </script>
