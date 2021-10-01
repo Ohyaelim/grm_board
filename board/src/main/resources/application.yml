@@ -4,6 +4,9 @@ spring:
     url: jdbc:mysql://localhost:3306/oylBoard?serverTimezone=Asia/Seoul
     username: root
     password: yaelim1122
+    schema:
+      classpath: import.sql
+    initialization-mode: always
   devtools:
     livereload:
       enabled: true

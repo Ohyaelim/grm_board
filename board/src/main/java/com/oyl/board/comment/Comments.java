@@ -44,7 +44,7 @@ public class Comments extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "post_id")
     private Post post;
 //

@@ -18,10 +18,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<Post> findPostsByMemberMemberId(Long memberId, @PageableDefault(size = 5) Pageable pageable);
     Page<Post> findByContentContaining(String keyword,@PageableDefault(size = 5) Pageable pageable);
     // Page<Post> findAllByEmail(String email, Pageable pageable);
-//    Optional<Post> findByPostIdAndIsDeleted(Long post_id, Boolean deleted);
+    // Optional<Post> findByPostIdAndIsDeleted(Long post_id, Boolean deleted);
 
     @Transactional
     @Modifying
     @Query("UPDATE Post p SET p.viewCount = p.viewCount + 1 WHERE p.postId = :postId")
     int updateViewCount(@Param("postId") Long postId);
+
 }

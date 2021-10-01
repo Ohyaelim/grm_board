@@ -2,6 +2,7 @@ package com.oyl.board.post;
 
 import com.oyl.board.board.Board;
 import com.oyl.board.board.BoardRepository;
+import com.oyl.board.exception.PostNotFoundException;
 import com.oyl.board.member.Member;
 import com.oyl.board.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,8 @@ public class PostService {
                 .title(request.getTitle())
                 .regDate(LocalDate.now())
                 .member(member)
+                .isDeleted(false)
+                .email(member.getEmail())
 //                .member(member)
 //                .member(memberRepository.findById(member)
                 .build());
@@ -47,7 +50,7 @@ public class PostService {
     @Transactional
     public Post update(PostRequestDto request, Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+                .orElseThrow(PostNotFoundException::new);
         post.update(request.toPostEntity());
         return post;
     }
@@ -55,16 +58,15 @@ public class PostService {
     @Transactional
     public Post delete(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
-        postRepository.delete(post);
-
+                .orElseThrow(PostNotFoundException::new);
+        post.deletePost();
         return post;
     }
 
     @Transactional
     public PostDetailResponseDto findById(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+                .orElseThrow(PostNotFoundException::new);
         postRepository.updateViewCount(postId);
 
         return new PostDetailResponseDto(post);
@@ -76,7 +78,6 @@ public class PostService {
             return postRepository.findPostsByBoardBoardId(boardId, pageable);
         } else
             return postRepository.findByContentContaining(keyword, pageable);
-
     }
 
     public Member getMember(Long  postId) {
