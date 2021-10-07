@@ -58,7 +58,7 @@ export default new Vuex.Store({
         logout({commit}){
             localStorage.removeItem("token")
             commit('logout')
-            router.push('/')
+            router.push('/').catch(()=>{});
         },
         async getMemberInfo({ commit }) {
             const myInfo = await getMyInfoApi()

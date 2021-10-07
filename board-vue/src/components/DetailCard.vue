@@ -19,7 +19,7 @@
           <div class="row pt-4 pb-5 mb-5 h-100">
             <div class= "col">
               <h3>◾ 내용</h3>
-              <p> {{ post.content }}</p>
+              <p v-html="handleNewLine(post.content)"></p>
             </div>
           </div>
 
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex"
+import {mapActions, mapState} from "vuex"
 import {deletePost} from "@/apis";
 
 export default {
@@ -58,8 +58,9 @@ export default {
   beforeCreate() {
     let postId = Number(this.$route.params.postId);
     this.$axios.get(`/post/${postId}`).then((response) => {
-      console.log(response.data)
-      this.post = response.data;
+      console.log('123'+response.data)
+      console.log(this.$route.params.postId)
+      this.post = response.data
     });
   },
   data() {
@@ -70,6 +71,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["getMemberInfo"]),
     updatePosting: function (postId) {
       this.$router.push({
         path: `/boardModify/${postId}`
@@ -84,8 +86,12 @@ export default {
       }else {
         alert(response.data);
       }
+    },
+    handleNewLine(str) {
+      return String(str).replace(/(?:\r\n|\r|\n)/g,"</br>");
     }
-  }
+  },
+
 }
 </script>
 

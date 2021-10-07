@@ -32,10 +32,10 @@
               :key="item.postId"
               @click = "detailPosting(item.postId)"
           >
-            <td>{{ item.postId }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.viewCount }}</td>
-            <td>{{ item.regDate }}</td>
+            <td v-if = "!item.isDeleted">{{ item.postId }}</td>
+            <td v-if = "!item.isDeleted">{{ item.title }}</td>
+            <td v-if = "!item.isDeleted">{{ item.viewCount }}</td>
+            <td v-if = "!item.isDeleted">{{ item.regDate }}</td>
           </tr>
           </tbody>
         </template>

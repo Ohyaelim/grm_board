@@ -28,11 +28,13 @@
           <div class="pa-3">
             <v-text-field
                 v-model="email"
+                :rules="emailRules"
                 label="이메일을 입력하세요."
             ></v-text-field>
             <v-text-field
                 v-model="password"
                 type="password"
+                :rules="pwdRules"
                 label="패스워드를 입력하세요."
             ></v-text-field>
 
@@ -66,7 +68,18 @@ export default {
     return{
       email: null,
       password: null,
-
+      emailRules: [
+        v=> !!v || '이메일을 입력해주세요.',
+        v=> /.+@.+.com+/.test(v) || '이메일 형식을 지켜주세요.',
+        v=> /[a-zA-Z]/.test(v) || '한글은 입력을 허용하지 않습니다.',
+        v=>(v.length<254) || '이메일은 254자 이상 입력할 수 없습니다.'
+      ],
+      pwdRules: [
+        v => !!v || '패스워드는 필수입니다.',
+        v=> /^.*(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$@$!%*#?&]).*$/.test(v) || '패스워드는 영대소문자, 숫자, 특수기호가 포함된 8자 이상만 가능합니다.',
+        v => (v.length>7) || '패스워드는 8자보다 길게 써주세요.',
+        v => (v.length<21) || '패스워드는 20자를 넘기지마세요.',
+      ]
     }
   },
   computed: {

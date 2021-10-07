@@ -5,12 +5,10 @@
         📝 공부게시판
         <v-spacer></v-spacer>
         <v-text-field
-            v-model = "keyword"
             append-icon="mdi-magnify"
             label="아직 검색사용이 불가합니다. (빠른 시일 내에 도입예정 🙃)"
             single-line
             hide-details
-            @click="searchPost(keyword)"
         ></v-text-field>
       </v-card-title>
       <!--      <v-data-table-->
@@ -48,11 +46,11 @@
               :key="item.postId"
               @click = "detailPosting(item.postId)"
           >
-            <td>{{ item.postId }}</td>
-            <td>{{ item.title }}</td>
-            <td>{{ item.nickname }}</td>
-            <td>{{ item.viewCount }}</td>
-            <td>{{ item.regDate }}</td>
+            <td v-if = "!item.isDeleted">{{ item.postId }}</td>
+            <td v-if = "!item.isDeleted">{{ item.title }}</td>
+            <td v-if = "!item.isDeleted">{{ item.nickname }}</td>
+            <td v-if = "!item.isDeleted">{{ item.viewCount }}</td>
+            <td v-if = "!item.isDeleted">{{ item.regDate }}</td>
           </tr>
           </tbody>
         </template>

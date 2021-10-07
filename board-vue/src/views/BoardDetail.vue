@@ -11,11 +11,8 @@
 </template>
 
 <script>
-// import Comments from "@/components/Comments";
 import CommentList from "@/components/CommentList";
 import Detail from "@/components/DetailCard";
-
-// import {mapState} from "vuex"
 
 export default {
   name: "BoardDetail",

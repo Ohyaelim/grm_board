@@ -1,15 +1,10 @@
 package com.oyl.board.post;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.oyl.board.board.Board;
 import com.oyl.board.comment.Comments;
-import com.oyl.board.common.BaseTimeEntity;
 import com.oyl.board.member.Member;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -72,8 +67,8 @@ public class Post {
     }
 
     public void deletePost(){
-        this.setIsDeleted(Boolean.TRUE);
-        List<Comments> comments = this.getComments();
+        this.isDeleted = Boolean.TRUE;
+        List<Comments> comments = this.comments;
         for (Comments comment : comments) {
             comment.setIsDeleted(Boolean.TRUE);
         }
