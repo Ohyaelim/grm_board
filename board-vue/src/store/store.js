@@ -6,6 +6,13 @@ import { getMyInfoApi } from "../apis/index";
 
 Vue.use(Vuex)
 
+const enhanceAccessToken = () => {
+    const {token} = localStorage
+    if (!token) return
+    axios.defaults.headers.common["authtoken"] = `${token}`
+}
+enhanceAccessToken()
+
 export default new Vuex.Store({
     state: {
         userInfo: localStorage.token === null ? null : localStorage.token,
@@ -20,6 +27,7 @@ export default new Vuex.Store({
             state.isLogin = true
             state.isLoginError = false
             state.userInfo = payload
+            localStorage.token = payload
         },
         //로그인이 실패했을 때
         loginError(state) {
@@ -45,37 +53,43 @@ export default new Vuex.Store({
                     // 성공시 token 어쩌구가 넘어와
                     // 토큰을 헤더에 포함시켜서 유저 정보 불러와
                     let token = res.data;
+                    console.log(token)
+                    // axios.defaults.headers.common['authtoken']=`${res.data}`
                     // 토큰을 로컬 스토리지에 저장
-                    localStorage.setItem("token", token);
                     commit("loginSuccess", token);
+
                     //   dispatch("getMemberInfo");
                     router.push("/");
+                    // window.location.reload()
                 })
                 .catch(() => {
                     alert("이메일과 비밀번호를 확인하세요~!");
                 });
         },
         logout({commit}){
-            localStorage.removeItem("token")
+            delete localStorage.token
             commit('logout')
             router.push('/').catch(()=>{});
         },
         async getMemberInfo({ commit }) {
             const myInfo = await getMyInfoApi()
-                .then((res) => {
-                    console.log("getMemberInfo", res.data);
-                    return res.data;
-                })
-                .catch((err) => {
-                    console.error(err);
-                    return {};
-                });
+                // .then((res) => {
+                //     console.log("getMemberInfo", res.data);
+                //     return res.data;
+                // })
+                // .catch((err) => {
+                //     console.error(err);
+                //     return {};
+                // });
+            console.log(myInfo.data)
+
             commit("setUserInfo"); // 전역 상태로 지정하고 싶다면..
-            return myInfo;
+            return myInfo.data;
         },
         async putMemberInfo() {
             // 수정 요청 넣고
             // 전역 상태 변경
         },
+
     }
 })

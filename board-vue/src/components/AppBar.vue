@@ -105,6 +105,14 @@
             <v-list-item-title>💜 글쓰기</v-list-item-title>
           </v-list-item>
 
+          <v-list-item v-if="isLogin===true" to="/webinar/enter">
+            <v-list-item-title>🤎 입장하기</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item v-if="isLogin===true" to="/webinar/manage">
+            <v-list-item-title>🖤 심포지엄관리</v-list-item-title>
+          </v-list-item>
+
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

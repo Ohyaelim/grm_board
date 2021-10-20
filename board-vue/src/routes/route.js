@@ -10,6 +10,9 @@ import BoardWrite from "@/views/BoardWrite";
 import BoardDetail from "@/views/BoardDetail";
 import BoardModify from "@/views/BoardModify";
 import MyBoards from "@/views/MyBoards";
+import WebinarEnter from "@/views/WebinarEnter";
+import WebinarManage from "@/views/WebinarManage";
+import WebinarCreate from "@/views/WebinarCreate";
 
 Vue.use(VueRouter)
 
@@ -83,6 +86,24 @@ const routes = [
         name: 'MyBoards',
         beforeEnter: onlyAuthUser,
         component: MyBoards
+    },
+    {
+        path: '/webinar/enter',
+        name: 'WebinarEnter',
+        beforeEnter: onlyAuthUser,
+        component: WebinarEnter
+    },
+    {
+        path: '/webinar/manage',
+        name: 'WebinarManage',
+        beforeEnter: onlyAuthUser,
+        component: WebinarManage
+    },
+    {
+        path: '/webinar/create',
+        name: 'WebinarCreate',
+        beforeEnter: onlyAuthUser,
+        component: WebinarCreate
     }
 ]
 

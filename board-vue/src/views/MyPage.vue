@@ -37,6 +37,8 @@
 <!--            ></v-text-field>-->
 <!--          </div>-->
 <!--        </div>-->
+
+
         <div>
           <v-btn
               @click="update ? saveMyInfo() : updateBtnHandler()"
@@ -46,8 +48,10 @@
               elevation="2"
               raised
               rounded
-          >{{ update ? "저장" : "정보 수정" }}</v-btn>
+          >{{ update ? "저장" : "정보 수정" }}
+          </v-btn>
         </div>
+
       </v-card>
       <v-row
           align="center"
@@ -125,7 +129,7 @@ export default {
       update: false,
       nameRules:[
         v => !!v || '닉네임은 필수입니다.',
-        v => /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(v) || '닉네임은 한글만 입력하세요',
+        v => /^[ㄱ-ㅎㅏ-ㅣ가-힣]*$/.test(v) || '닉네임은 한글만 입력하세요',
         v => (v.length<101) || '닉네임은 100자 이하만 입력하세요.',
         v => (v.length>1) || '닉네임은 한글자 이상 입력하세요.',
       ]
@@ -151,11 +155,11 @@ export default {
     },
 
   },
-  async beforeMount() {
+  async created() {
     console.log(this.$store.state);
-    console.log("beforeCreate >> ", this.getMemberInfo);
-
     const myInfo = await this.getMemberInfo();
+    console.log("beforeCreate >> ", myInfo);
+
     this.infoData.nickname = myInfo.nickname ? myInfo.nickname : "다시 로그인 해주세요 😉";
     this.infoData.email = myInfo.email;
     this.infoData.memberId = myInfo.memberId;

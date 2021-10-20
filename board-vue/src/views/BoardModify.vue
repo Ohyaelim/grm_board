@@ -2,7 +2,7 @@
   <div class="fill-height box">
     <v-container>
       <v-card class="pa-4 ma-4" elevation="2" outlined shaped>
-        <v-form ref="form" @submit.prevent="onSubmitForm">
+        <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
           <h1 class="text-center">수정하기 🖋</h1>
 
 <!--          <v-select-->
@@ -16,6 +16,7 @@
           <v-text-field class="mt-5"
                         height="50" label="제목" outlined
                         v-model="post.title"
+                        :rules="titleRules"
                         placeholder="제목을 입력하세요"
           ></v-text-field>
           <v-textarea
@@ -24,18 +25,12 @@
               name="input-7-4"
               label="내용"
               placeholder="내용을 입력하세요."
+              :rules="contentRules"
           ></v-textarea>
           <v-card>
             <editor height="500px"/>
           </v-card>
-          <v-btn
-              color="#AB47BC"
-              class="mt-5 float-right mr-3"
-              dark
-              type="submit"
-          >
-            수정!!
-          </v-btn>
+          <v-btn color="#AB47BC" type="submit" :disabled="!valid">수정하기</v-btn>
         </v-form>
       </v-card>
     </v-container>
@@ -56,9 +51,18 @@ export default {
   },
   data(){
     return {
+      valid:false,
       post: {
 
-      }
+      },
+      titleRules: [
+        v => !!v || '제목은 필수입니다.',
+        v => (v.length<100) || '제목을 100자 미만으로 적어주세요.'
+      ],
+      contentRules: [
+        v => !!v || '내용은 필수입니다.',
+        v => (v.length<1000) || ' 내용이 너무 길어요~!'
+      ]
     }
   },
   methods: {

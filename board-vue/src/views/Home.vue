@@ -15,6 +15,12 @@ export default {
   computed: {
     ...mapState(['isLogin'])
   },
+  beforeCreate() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      this.$store.state.isLogin = true;
+    }
+  }
 }
 </script>
 
