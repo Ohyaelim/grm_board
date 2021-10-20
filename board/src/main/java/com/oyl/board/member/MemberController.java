@@ -44,6 +44,7 @@ public class MemberController {
     public ResponseEntity<SignUpDto> findUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member  = (Member) authentication.getPrincipal();
+        log.info(member.getEmail());
         SignUpDto memberResponse = memberService.findByUserEmail(member.getEmail());
         return ResponseEntity.ok(memberResponse);
     }
