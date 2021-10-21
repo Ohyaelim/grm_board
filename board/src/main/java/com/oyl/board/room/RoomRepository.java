@@ -6,8 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
 //    Page<Room> findAllByStartDateAndEndDate(@PageableDefault(size = 5)Pageable pageable);
+
+//    Optional<Room> findById(Long id);
 }

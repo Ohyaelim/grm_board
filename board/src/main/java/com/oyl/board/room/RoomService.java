@@ -1,5 +1,7 @@
 package com.oyl.board.room;
 
+import com.oyl.board.member.Member;
+import com.oyl.board.member.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,11 +26,12 @@ public class RoomService {
 
     private final RestTemplate restTemplate;
     private final RoomRepository roomRepository;
+    private final MemberRepository memberRepository;
 
-
-    public RoomService(RestTemplateBuilder restTemplateBuilder, RoomRepository roomRepository) {
+    public RoomService(RestTemplateBuilder restTemplateBuilder, RoomRepository roomRepository, MemberRepository memberRepository) {
         this.restTemplate = restTemplateBuilder.build();
         this.roomRepository = roomRepository;
+        this.memberRepository = memberRepository;
     }
 
 
@@ -93,6 +96,44 @@ public class RoomService {
     public Page<Room> getRoomList (@PageableDefault(size = 5) Pageable pageable) {
         return roomRepository.findAll(pageable);
 
+    }
+
+
+    public String enterRoom( String roomId, Member member) throws org.json.simple.parser.ParseException {
+
+        String url = "https://biz-dev-api.gooroomee.com/api/v1/room/user/otp";
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("roomId", roomId);
+//        params.add("username", member.getNickname());
+        params.add("username", "yali");
+        params.add("roleId", "participant");
+//        params.add("apiUserId", member.getEmail());
+        params.add("apiUserId", "1234");
+
+        // create headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type",  "application/x-www-form-urlencoded; charset=utf-8");
+        headers.add("X-GRM-AuthToken", "1aa271b4af192d114c55199a81cc211093b170481d15119584");
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
+
+        String response = restTemplate.postForObject(
+                url,
+                entity,
+                String.class
+        );
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
+        String resultCode = (String) jsonObject.get("resultCode");
+
+        if(resultCode.equals("GRM_200")){
+            JSONObject data = (JSONObject) jsonObject.get("data");
+            JSONObject roomUserOtp = (JSONObject) data.get("roomUserOtp");
+            String otp = (String) roomUserOtp.get("otp");
+            return otp;
+        }
+        return null; // TODO 오류라고 알려주기
     }
 
 }

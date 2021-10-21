@@ -22,4 +22,5 @@ public class RoomRequestDto {
 
     private String endDate;
 
+    private String roomId;
 }
