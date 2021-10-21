@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bytecode.assign.TypeCasting;
+
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,5 +15,11 @@ import lombok.NoArgsConstructor;
 public class RoomRequestDto {
 
     private String roomTitle;
+
+    private String passwd;
+
+    private String startDate;
+
+    private String endDate;
 
 }

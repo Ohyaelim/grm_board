@@ -3,11 +3,10 @@ import axios from 'axios'
 const instance = axios.create({
 //     baseURL: "http://localhost:8080"
     headers: {
-        // authtoken: localStorage.getItem("token"), // header의 속성
+        authtoken: localStorage.getItem("token"), // header의 속성
     },
 
 });
-// instance.defaults.headers.common['authtoken'] = localStorage.getItem("token")
 
 function registerUser(userData) {
     return instance.post('auth/signup', userData);
@@ -46,5 +45,9 @@ function createComment(commentData, postId){
     return instance.post(`/comments/`+postId, commentData);
 }
 
+function createRoom(roomData) {
+    return instance.post(`/webinar/create`+roomData);
+}
 
-export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment};
+
+export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment, createRoom};

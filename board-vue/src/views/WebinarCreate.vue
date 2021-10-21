@@ -10,7 +10,7 @@
     >
       ← 목록으로 돌아가기
     </v-btn>
-    <h1 align="center">심포지엄 등록</h1>
+    <h1 align="center">WEBINAR REGISTER</h1>
 
     <div>
       <v-container>
@@ -20,7 +20,7 @@
           <v-form v-model="valid" @submit.prevent="submitForm">
             <v-container>
               <v-text-field
-                  label="심포지엄 제목"
+                  label="웨비나 제목"
                   required
               />
               <v-text-field
@@ -28,7 +28,7 @@
                   required
               />
               <v-text-field
-                  label="연자정보"
+                  label="비밀번호"
                   required
               />
 <!--              날짜 입력-->
@@ -64,9 +64,9 @@ export default {
   data(){
     return{
       valid:false,
-      title:'',
+      roomTitle:'',
       host: '',
-      hostInfo:'',
+      passwd:'',
       startDate:'',
       endDate:'',
       file:''
@@ -74,7 +74,12 @@ export default {
   },
   methods:{
     async submitForm(){
-      const BASE_URL = 'https://cors-anywhere.herokuapp.com/https://biz-dev-api.gooroomee.com/api/v1/room'
+      const roomData = {
+        roomTitle: ,
+        startDate: ,
+        endDate: ,
+        passwd:
+      }
       const config = {
         headers: {
           "Content-Type" : "application/x-www-form-urlencoded;charset=utf-8",
@@ -84,6 +89,7 @@ export default {
       // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
       // axios.defaults.headers.post['X-GRM-AuthToken'] = '1aa271b4af192d114c55199a81cc211093b170481d15119584'
       Vue.prototype.$http = axios
+
 
       this.$http.post(
           `${BASE_URL}`,

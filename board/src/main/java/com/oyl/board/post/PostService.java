@@ -80,7 +80,7 @@ public class PostService {
             return postRepository.findByContentContaining(keyword, pageable);
     }
 
-    public Member getMember(Long  postId) {
+    public Member getMember(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         return post.getMember();

@@ -1,86 +1,98 @@
 package com.oyl.board.room;
 
+import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Collections;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 
 @Service
+@Slf4j
 public class RoomService {
 
     private final RestTemplate restTemplate;
+    private final RoomRepository roomRepository;
 
-    public RoomService(RestTemplateBuilder restTemplateBuilder) {
+
+    public RoomService(RestTemplateBuilder restTemplateBuilder, RoomRepository roomRepository) {
         this.restTemplate = restTemplateBuilder.build();
+        this.roomRepository = roomRepository;
     }
+
 
     // 방 개설하기
-    public ResponseEntity<Room> createRoom(RoomRequestDto dto){
+    public void createRoom(RoomRequestDto dto) throws ParseException, org.json.simple.parser.ParseException {
+
         String url = "https://biz-dev-api.gooroomee.com/api/v1/room";
 
-        // create headers
-        HttpHeaders headers = new HttpHeaders();
-        // set `accept` header
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        // set custom header
-        headers.set("X-GRM-AuthToken", "1aa271b4af192d114c55199a81cc211093b170481d15119584");
-        headers.set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        // build the request
-        HttpEntity request = new HttpEntity(headers);
+        // startDate와 endDate 원하는 포맷으로 출력하자
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss Z", Locale.US);
+        String realStartDate = dateFormat.format(transFormat.parse(dto.getStartDate()));
+        String realEndDate = dateFormat.format(transFormat.parse(dto.getEndDate()));
 
-        // make an HTTP GET request with headers
-        UriComponents uri = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("roomTitle",dto.getRoomTitle())
-                .build(false);
 
-        // send POST request
-        return restTemplate.postForEntity(url, request, Room.class);
-
-    }
-
-    // 리스트 불러오기
-    public Object getRoomList() {
-        String url = "https://biz-dev-api.gooroomee.com/api/v1/log/room?date=20211019";
-
-//        UriComponents uri = UriComponentsBuilder.fromHttpUrl(url)
-//                .queryParam("date","20211020")
-//                .build(false);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("roomTitle", dto.getRoomTitle());
+        params.add("passwd", dto.getPasswd());
+        params.add("startDate", realStartDate);
+        params.add("endDate", realEndDate);
 
         // create headers
         HttpHeaders headers = new HttpHeaders();
-        // set `accept` header
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        // set custom header
-        headers.set("X-GRM-AuthToken", "1aa271b4af192d114c55199a81cc211093b170481d15119584");
-        headers.set("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+        headers.add("Content-Type",  "application/x-www-form-urlencoded; charset=utf-8");
+        headers.add("X-GRM-AuthToken", "1aa271b4af192d114c55199a81cc211093b170481d15119584");
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
 
 
-        // build the request
-        HttpEntity request = new HttpEntity(headers);
-
-        // make an HTTP GET request with headers
-        ResponseEntity<String> response = restTemplate.exchange(
+        String response = restTemplate.postForObject(
                 url,
-                HttpMethod.GET,
-                request,
+                entity,
                 String.class
         );
 
-        // check response
-        if (response.getStatusCode() == HttpStatus.OK) {
-            System.out.println("Request Successful.");
-            System.out.println(response.getBody());
-        } else {
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
+        String resultCode = (String) jsonObject.get("resultCode");
+
+        // 잘 출력되면
+        if(resultCode.equals("GRM_200")){
+            JSONObject data = (JSONObject) jsonObject.get("data");
+            JSONObject room = (JSONObject) data.get("room");
+            String roomId = (String) room.get("roomId");
+            roomRepository.save(Room.builder()
+                    .roomTitle(dto.getRoomTitle())
+                    .passwd(dto.getPasswd())
+                    .startDate(realStartDate)
+                    .endDate(realEndDate)
+                    .roomId(roomId)
+                    .build()
+            );
+
+            System.out.println(response);
+        }else{
             System.out.println("Request Failed");
-            System.out.println(response.getStatusCode());
         }
-        return response;
+
+    }
+
+
+    public Page<Room> getRoomList (@PageableDefault(size = 5) Pageable pageable) {
+        return roomRepository.findAll(pageable);
+
     }
 
 }
