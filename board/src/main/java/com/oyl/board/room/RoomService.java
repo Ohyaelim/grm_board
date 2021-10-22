@@ -105,11 +105,9 @@ public class RoomService {
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("roomId", roomId);
-//        params.add("username", member.getNickname());
-        params.add("username", "yali");
+        params.add("username", member.getNickname());
         params.add("roleId", "participant");
-//        params.add("apiUserId", member.getEmail());
-        params.add("apiUserId", "1234");
+        params.add("apiUserId", member.getEmail());
 
         // create headers
         HttpHeaders headers = new HttpHeaders();
@@ -134,6 +132,30 @@ public class RoomService {
             return otp;
         }
         return null; // TODO 오류라고 알려주기
+    }
+
+
+    // TODO 참여자 강퇴 마저 킵고잉
+    public void kickUser(String roomId, Member member) {
+        String url = "https://biz-dev-api.gooroomee.com/api/v1/room/user/kick";
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("roomId", roomId);
+        //        params.add("apiUserId", member.getEmail());
+        params.add("apiUserId", "1234");
+
+        // create headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type",  "application/x-www-form-urlencoded; charset=utf-8");
+        headers.add("X-GRM-AuthToken", "1aa271b4af192d114c55199a81cc211093b170481d15119584");
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
+
+
+        String response = restTemplate.postForObject(
+                url,
+                entity,
+                String.class
+        );
     }
 
 }

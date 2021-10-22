@@ -38,10 +38,12 @@ public class RoomController {
 
     @PostMapping("/enter/{id}")
     public String enterRoom(@PathVariable String id) throws org.json.simple.parser.ParseException {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Member member  = (Member) authentication.getPrincipal();
-        String otp = roomService.enterRoom(id, null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Member member  = (Member) authentication.getPrincipal();
+        String otp = roomService.enterRoom(id, member);
         log.info(otp);
-        return "redirect:https://biz-dev.gooroomee.com/room/otp/"+otp;
+        return "redirect:https://biz-dev.gooroomee.com/room/otp/" + otp;
     }
+
+
 }
