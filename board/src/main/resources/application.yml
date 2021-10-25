@@ -7,6 +7,7 @@ spring:
     schema:
       classpath: import.sql
     initialization-mode: always
+
   devtools:
     livereload:
       enabled: true
@@ -19,7 +20,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update # SessionFactory? ??? ? drop,create,alter
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
@@ -27,3 +28,8 @@ spring:
         format_sql: true
         show-sql: true
 
+logging:
+  level:
+    org:
+      apache:
+        http: DEBUG

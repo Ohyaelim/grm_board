@@ -38,4 +38,8 @@ public class Room {
     @Column(nullable = false, name = "room_id")
     private String roomId;
 
+    // 방 삭제 확인
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
 }
