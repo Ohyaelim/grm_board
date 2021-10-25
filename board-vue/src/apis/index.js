@@ -46,7 +46,7 @@ function createComment(commentData, postId){
 }
 
 function createRoom(roomData) {
-    return instance.post(`/webinar/create`+roomData);
+    return instance.post(`/webinar/create`,roomData);
 }
 
 

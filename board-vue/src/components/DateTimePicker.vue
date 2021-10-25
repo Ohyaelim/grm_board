@@ -19,8 +19,10 @@
       </template>
       <v-date-picker v-model="date" scrollable>
         <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click="dateModal = false">Cancel</v-btn>
-        <v-btn flat color="primary" @click="timeModal = true">OK</v-btn>
+        <v-btn flat color="primary" @click="$emit(dateModal = false)">Cancel</v-btn>
+<!--        <v-btn flat color="primary" @click="dateModal = false">Cancel</v-btn>-->
+<!--        <v-btn flat color="primary" @click="timeModal = true">OK</v-btn>-->
+        <v-btn flat color="primary" @click="$emit(timeModal = true)">OK</v-btn>
       </v-date-picker>
     </v-dialog>
 

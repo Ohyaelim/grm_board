@@ -44,7 +44,7 @@ public class RoomController {
         String otp = roomService.enterRoom(id, member);
 //        String otp = roomService.enterRoomTest(id, member);
         log.info(otp);
-        return "redirect:https://biz-dev.gooroomee.com/room/otp/" + otp;
+        return "https://biz-dev.gooroomee.com/room/otp/"+ otp;
     }
 
 

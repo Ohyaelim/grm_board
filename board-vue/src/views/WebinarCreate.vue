@@ -21,6 +21,7 @@
             <v-container>
               <v-text-field
                   label="웨비나 제목"
+                  v-model="form.roomTitle"
                   required
               />
               <v-text-field
@@ -29,12 +30,16 @@
               />
               <v-text-field
                   label="비밀번호"
+                  v-model="form.passwd"
                   required
               />
 <!--              날짜 입력-->
               <v-row>
-                <DateTimePicker :label="'시작날짜'" required></DateTimePicker>
-                <DateTimePicker :label="'종료날짜'" required></DateTimePicker>
+<!--                <DateTimePicker :label="'시작날짜'" required></DateTimePicker>-->
+<!--                <DateTimePicker :label="'종료날짜'" required></DateTimePicker>-->
+                <VueCtkDateTimePicker v-model="startDate" label="시작일시" format="YYYY-MM-DD HH:mm"/>
+                <VueCtkDateTimePicker v-model="endDate" label="종료일시" format="YYYY-MM-DD HH:mm"/>
+
               </v-row>
 <!--              이미지-->
               <v-file-input
@@ -52,53 +57,43 @@
 </template>
 
 <script>
-import DateTimePicker from "@/components/DateTimePicker";
-import axios from "axios";
-import Vue from "vue";
+import {createRoom} from "@/apis";
 
 export default {
   name: "WebinarCreate",
   components: {
-    DateTimePicker
   },
   data(){
     return{
       valid:false,
-      roomTitle:'',
-      host: '',
-      passwd:'',
+      form: {
+        roomTitle:'',
+        passwd:''
+      },
       startDate:'',
       endDate:'',
-      file:''
     }
   },
   methods:{
     async submitForm(){
+
       const roomData = {
-        roomTitle: ,
-        startDate: ,
-        endDate: ,
-        passwd:
+        roomTitle: this.form.roomTitle,
+        passwd: this.form.passwd,
+        startDate: this.startDate,
+        endDate: this.endDate
       }
-      const config = {
-        headers: {
-          "Content-Type" : "application/x-www-form-urlencoded;charset=utf-8",
-          "X-GRM-AuthToken" : "1aa271b4af192d114c55199a81cc211093b170481d15119584"
-        }
+
+      console.log(roomData)
+
+      const response = await createRoom(roomData);
+      if (response.status == 200) {
+        alert('웨비나 등록 완료^^;');
+        await this.$router.push('/webinar/manage');
+      } else {
+        alert(response.data);
       }
-      // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8'
-      // axios.defaults.headers.post['X-GRM-AuthToken'] = '1aa271b4af192d114c55199a81cc211093b170481d15119584'
-      Vue.prototype.$http = axios
 
-
-      this.$http.post(
-          `${BASE_URL}`,
-          {roomTitle : '테스트용입니다요'},
-          config
-      )
-      .then((res) => {
-        console.log(res.data)
-      })
     }
   }
 }
