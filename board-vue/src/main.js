@@ -8,12 +8,15 @@ import {required, email} from "vee-validate/dist/rules";
 import store from "@/store/store";
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+import moment from "moment"
+import VueMomentJS from "vue-momentjs"
 
 
 import './static/MyStyle.css'
 
 Vue.config.productionTip = false
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+Vue.use(VueMomentJS,moment)
 
 extend('email', email);
 extend('required', required);

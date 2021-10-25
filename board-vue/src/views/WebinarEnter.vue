@@ -37,10 +37,10 @@
           >
             <!--            <td>{{ item.postId }}</td>-->
             <td>{{ item.roomTitle }}</td>
-            <td>{{ item.startDate }}</td>
-            <td>{{ item.endDate }}</td>
+            <td>{{ DateTime(item.startDate) }}</td>
+            <td>{{ DateTime(item.endDate) }}</td>
             <td><v-btn
-                elevation="2" outlined color="green" width="120" height="40" @click="EntranceGRM(item.roomId)"
+                elevation="2" outlined color="purple" width="120" height="40" @click="EntranceGRM(item.roomId)"
             >입장하기</v-btn></td>
           </tr>
           </tbody>
@@ -60,6 +60,8 @@
 
 <script>
 import {mapState} from "vuex"
+import moment from 'moment'
+
 export default {
   name: "Boards",
   computed: {
@@ -90,6 +92,9 @@ export default {
         window.open(res.data, "_blank");
       })
     },
+    DateTime(t) {
+      return moment(t).format('📆 YYYY-MM-DD 🧭 hh:mm')
+    }
   }
 }
 </script>

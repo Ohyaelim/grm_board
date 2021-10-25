@@ -1,5 +1,15 @@
 <template>
   <v-container>
+    <v-btn
+        :loading="loading3"
+        :disabled="loading3"
+        color="#8852a6"
+        class="ma-2 white--text"
+        @click="loader = 'loading3'"
+        to="/webinar/create"
+    >
+      웨비나생성
+    </v-btn>
     <v-card >
       <v-card-title>
         📍Admin용, 심포지엄 목록 관리
@@ -28,6 +38,12 @@
             <th class="text-left">
               마감일자
             </th>
+            <th class="text-left">
+              📍
+            </th>
+            <th class="text-left">
+              신청자 목록
+            </th>
           </tr>
           </thead>
           <tbody>
@@ -38,8 +54,14 @@
 <!--            <td>{{ item.postId }}</td>-->
             <td>{{ item.roomTitle }}</td>
             <td>{{ item.passwd }}</td>
-            <td>{{ item.startDate }}</td>
-            <td>{{ item.endDate }}</td>
+<!--            <td>{{ item.startDate }}</td>-->
+            <td>{{ DateTime(item.startDate) }}</td>
+<!--            <td>{{ item.endDate }}</td>-->
+            <td>{{ DateTime(item.endDate) }}</td>
+            <td><v-col><v-checkbox v-model="pinRoom"/></v-col></td>
+            <td><v-btn
+                elevation="2" outlined color="purple" width="120" height="40" to="/webinar/Participants"
+            >보기</v-btn></td>
           </tr>
           </tbody>
         </template>
@@ -58,6 +80,8 @@
 
 <script>
 import {mapState} from "vuex"
+import moment from 'moment'
+
 export default {
   name: "Boards",
   computed: {
@@ -65,7 +89,10 @@ export default {
   },
   data() {
     return {
-      webinarList:''
+      webinarList:'',
+      data: {
+        pinRoom: []
+      }
     };
   },
   created () {
@@ -82,6 +109,9 @@ export default {
             console.log(err);
           })
     },
+    DateTime(t) {
+      return moment(t).format('📆 YYYY-MM-DD 🧭 hh:mm')
+    }
   }
 }
 </script>

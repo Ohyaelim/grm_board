@@ -13,6 +13,7 @@ import MyBoards from "@/views/MyBoards";
 import WebinarEnter from "@/views/WebinarEnter";
 import WebinarManage from "@/views/WebinarManage";
 import WebinarCreate from "@/views/WebinarCreate";
+import ParticipantsList from "@/views/ParticipantsList";
 
 Vue.use(VueRouter)
 
@@ -104,7 +105,13 @@ const routes = [
         name: 'WebinarCreate',
         beforeEnter: onlyAuthUser,
         component: WebinarCreate
-    }
+    },
+    {
+        path: '/webinar/Participants',
+        name: 'ParticipantsList',
+        beforeEnter: onlyAuthUser,
+        component: ParticipantsList
+    },
 ]
 
 const router = new VueRouter({
