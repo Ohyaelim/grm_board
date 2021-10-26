@@ -49,5 +49,9 @@ function createRoom(roomData) {
     return instance.post(`/webinar/create`,roomData);
 }
 
+function mainPinned(id) {
+    return instance.post(`/webinar/main/`+ id).then(()=>
+    window.alert("됐네요;"))
+}
 
-export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment, createRoom};
+export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment, createRoom, mainPinned};

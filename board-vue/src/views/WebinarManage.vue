@@ -58,7 +58,14 @@
             <td>{{ DateTime(item.startDate) }}</td>
 <!--            <td>{{ item.endDate }}</td>-->
             <td>{{ DateTime(item.endDate) }}</td>
-            <td><v-col><v-checkbox v-model="pinRoom"/></v-col></td>
+            <td>
+              <v-col>
+                <v-btn v-model="data.pinRoom" v-if="item.isPinned == true " outlined color="purple" @click="RegisterMain(item.id)">
+                  이미메인;</v-btn>
+                <v-btn v-model="data.pinRoom" v-else @click="RegisterMain(item.id)">
+                  메인등록</v-btn>
+              </v-col>
+            </td>
             <td><v-btn
                 elevation="2" outlined color="purple" width="120" height="40" to="/webinar/Participants"
             >보기</v-btn></td>
@@ -81,6 +88,7 @@
 <script>
 import {mapState} from "vuex"
 import moment from 'moment'
+import {mainPinned} from "@/apis";
 
 export default {
   name: "Boards",
@@ -91,7 +99,7 @@ export default {
     return {
       webinarList:'',
       data: {
-        pinRoom: []
+        pinRoom: ''
       }
     };
   },
@@ -111,6 +119,10 @@ export default {
     },
     DateTime(t) {
       return moment(t).format('📆 YYYY-MM-DD 🧭 hh:mm')
+    },
+    RegisterMain(id) {
+      mainPinned(id)
+      window.location.reload()
     }
   }
 }
