@@ -2,6 +2,7 @@ package com.oyl.board.room;
 
 import com.oyl.board.member.Member;
 import com.oyl.board.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,7 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-
+@RequiredArgsConstructor
 @Service
 @Slf4j
 public class RoomService {
@@ -29,11 +30,11 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final MemberRepository memberRepository;
 
-    public RoomService(RestTemplateBuilder restTemplateBuilder, RoomRepository roomRepository, MemberRepository memberRepository) {
-        this.restTemplate = restTemplateBuilder.build();
-        this.roomRepository = roomRepository;
-        this.memberRepository = memberRepository;
-    }
+//    public RoomService(RestTemplateBuilder restTemplateBuilder, RoomRepository roomRepository, MemberRepository memberRepository) {
+//        this.restTemplate = restTemplateBuilder.build();
+//        this.roomRepository = roomRepository;
+//        this.memberRepository = memberRepository;
+//    }
 
 
     // 방 개설하기
@@ -222,7 +223,20 @@ public class RoomService {
         }
     }
 
-//    public void deleteRoom(Long id) {
-//        Room room = roomRepository.findById(id);
-//    }
+
+    @Transactional
+    public void mainPinned(Long id){
+        // 메인에 핀이 꽂혀있는 경우
+        Room MainRoom = roomRepository.findRoomByIsPinned(Boolean.TRUE);
+
+        // 메인에 핀이 꽂혀 있었다면 핀 빼자
+        if (MainRoom != null)
+            MainRoom.pinOut();
+
+        Room notMainRoom = roomRepository.findById(id).orElseThrow();
+        notMainRoom.pinIn();
+    }
+
+
+
 }

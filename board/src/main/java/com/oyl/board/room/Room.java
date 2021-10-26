@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -38,8 +37,26 @@ public class Room {
     @Column(nullable = false, name = "room_id")
     private String roomId;
 
-    // 방 삭제 확인
-    @Column(name = "is_deleted")
-    private Boolean isDeleted;
 
+    // 방 삭제 확인
+    @Builder.Default
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = Boolean.FALSE;
+
+
+    // 핀이 꽂혔는지 아닌지 확인
+    @Builder.Default
+    @Column(name = "is_pinned", nullable = false)
+    private Boolean isPinned = Boolean.FALSE;
+
+
+    // 메인에 꼽힌 핀을 뽑는다.
+    public void pinOut() {
+        this.isPinned = Boolean.FALSE;
+    }
+
+    // 메인에 핀을 꼽는다.
+    public void pinIn(){
+        this.isPinned = Boolean.TRUE;
+    }
 }

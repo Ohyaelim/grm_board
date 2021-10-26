@@ -28,7 +28,7 @@ public class RoomController {
     @PostMapping("/create")
     public ResponseEntity<?> createRoom(@RequestBody RoomRequestDto requestDto) throws ParseException, org.json.simple.parser.ParseException {
         roomService.createRoom(requestDto);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/list")
@@ -37,16 +37,23 @@ public class RoomController {
     }
 
 
-    @PostMapping("/enter/{id}")
-    public String enterRoom(@PathVariable String id) throws org.json.simple.parser.ParseException {
+    @PostMapping("/enter/{roomId}")
+    public String enterRoom(@PathVariable String roomId) throws org.json.simple.parser.ParseException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Member member  = (Member) authentication.getPrincipal();
-        String otp = roomService.enterRoom(id, member);
+        String otp = roomService.enterRoom(roomId, member);
 //        String otp = roomService.enterRoomTest(id, member);
         log.info(otp);
         return "https://biz-dev.gooroomee.com/room/otp/"+ otp;
     }
 
+
+    // TODO 관리자 권한으로 주고 putmapping으로 바꾸자
+    @PostMapping("/main/{id}")
+    public ResponseEntity mainPinned(@PathVariable Long id) {
+        roomService.mainPinned(id);
+        return ResponseEntity.ok().build();
+    }
 
 
 

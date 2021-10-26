@@ -11,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
+    Room findRoomByIsPinned(Boolean isPinned);
+
 //    Page<Room> findAllByStartDateAndEndDate(@PageableDefault(size = 5)Pageable pageable);
 
 //    Optional<Room> findById(Long id);
