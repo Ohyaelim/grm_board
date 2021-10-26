@@ -56,6 +56,14 @@ public class RoomController {
     }
 
 
+    // main에 게시할 웨비나 찾기
+    @GetMapping()
+    public RoomMainResponseDto getMainRoom () {
+        return roomService.getMainRoom();
+    }
+
+
+
 
 //    @PostMapping("/user/kick")
 //    public ResponseEntity<?> createRoom(PathVariable String id) {

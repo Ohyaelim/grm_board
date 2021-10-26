@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -98,7 +97,6 @@ public class RoomService {
 
     public Page<Room> getRoomList (@PageableDefault(size = 5) Pageable pageable) {
         return roomRepository.findAll(pageable);
-
     }
 
 
@@ -140,7 +138,7 @@ public class RoomService {
 
 
     @Transactional
-    public String  enterRoomTest(String roomId, Member member) throws org.json.simple.parser.ParseException {
+    public String enterRoomTest(String roomId, Member member) throws org.json.simple.parser.ParseException {
         String url = "https://biz-dev-api.gooroomee.com/api/v1/room/user/otp";
 
         long beforeTime = System.currentTimeMillis(); //코드 실행 전에 시간 받아오기
@@ -227,16 +225,21 @@ public class RoomService {
     @Transactional
     public void mainPinned(Long id){
         // 메인에 핀이 꽂혀있는 경우
-        Room MainRoom = roomRepository.findRoomByIsPinned(Boolean.TRUE);
+        Room mainRoom = roomRepository.findRoomByIsPinned(Boolean.TRUE);
 
         // 메인에 핀이 꽂혀 있었다면 핀 빼자
-        if (MainRoom != null)
-            MainRoom.pinOut();
+        if (mainRoom != null)
+            mainRoom.pinOut();
 
-        Room notMainRoom = roomRepository.findById(id).orElseThrow();
-        notMainRoom.pinIn();
+        Room soonMainRoom = roomRepository.findById(id).orElseThrow();
+        soonMainRoom.pinIn();
     }
 
-
+    // 메인에 핀 꼽힌 아이찾기
+    @Transactional
+    public RoomMainResponseDto getMainRoom() {
+        Room mainRoom = roomRepository.findRoomByIsPinned(Boolean.TRUE);
+        return new RoomMainResponseDto(mainRoom);
+    }
 
 }
