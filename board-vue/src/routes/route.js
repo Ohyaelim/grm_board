@@ -107,7 +107,7 @@ const routes = [
         component: WebinarCreate
     },
     {
-        path: '/webinar/Participants',
+        path: '/webinar/Participants/:roomId',
         name: 'ParticipantsList',
         beforeEnter: onlyAuthUser,
         component: ParticipantsList

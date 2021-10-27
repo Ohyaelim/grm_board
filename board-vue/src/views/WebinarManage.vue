@@ -4,13 +4,14 @@
         :loading="loading3"
         :disabled="loading3"
         color="#8852a6"
-        class="ma-2 white--text"
+        class="white--text"
         @click="loader = 'loading3'"
+        style="margin-left: 860px; margin-bottom: 15px"
         to="/webinar/create"
     >
       웨비나생성
     </v-btn>
-    <v-card >
+    <v-card>
       <v-card-title>
         📍Admin용, 심포지엄 목록 관리
         <v-spacer></v-spacer>
@@ -18,7 +19,7 @@
 
       <v-simple-table
           fixed-header
-          height="300px"
+          height="800px"
       >
         <template v-slot:default>
           <thead>
@@ -75,7 +76,7 @@
               </v-col>
             </td>
             <td><v-btn
-                elevation="2" outlined color="purple" width="120" height="40" to="/webinar/Participants"
+                elevation="2" outlined color="purple" width="120" height="40"  @click="$router.push({name: 'ParticipantsList', params: { roomId: item.roomId },})"
             >보기</v-btn></td>
           </tr>
           </tbody>

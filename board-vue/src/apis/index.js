@@ -54,4 +54,5 @@ function mainPinned(id) {
     window.alert("됐네요;"))
 }
 
+
 export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment, createRoom, mainPinned};

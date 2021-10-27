@@ -109,7 +109,7 @@ export default {
             this.datas = res.data;
             console.log(res.data)
           })
-          .then((err) => {
+          .catch((err) => {
             console.log(err);
           })
     },

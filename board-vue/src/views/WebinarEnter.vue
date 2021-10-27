@@ -91,7 +91,7 @@ export default {
             console.log(res.data.content.endDate)
             console.log('날짜' + moment(res.data.content.endDate).isAfter(moment()))
           })
-          .then((err) => {
+          .catch((err) => {
             console.log('에러'+err);
           })
     },
