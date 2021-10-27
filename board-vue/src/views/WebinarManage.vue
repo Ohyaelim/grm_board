@@ -27,6 +27,9 @@
 <!--              No-->
 <!--            </th>-->
             <th class="text-left">
+              호스트
+            </th>
+            <th class="text-left">
               제목
             </th>
             <th class="text-left">
@@ -51,7 +54,7 @@
               v-for="item in webinarList"
               :key="item.roomTitle"
           >
-<!--            <td>{{ item.postId }}</td>-->
+            <td>{{ item.roomHost }}</td>
             <td>{{ item.roomTitle }}</td>
             <td>{{ item.passwd }}</td>
 <!--            <td>{{ item.startDate }}</td>-->
@@ -64,6 +67,11 @@
                   이미메인;</v-btn>
                 <v-btn v-model="data.pinRoom" v-else @click="RegisterMain(item.id)">
                   메인등록</v-btn>
+
+                <v-btn v-model="data.pinRoom" v-if="today > item.endDate" @click="RegisterMain(item.id)">
+                  삭제</v-btn>
+                <v-btn v-model="data.pinRoom" v-else disabled @click="RegisterMain(item.id)">
+                  이미 종료</v-btn>
               </v-col>
             </td>
             <td><v-btn
@@ -119,6 +127,11 @@ export default {
     },
     DateTime(t) {
       return moment(t).format('📆 YYYY-MM-DD 🧭 hh:mm')
+    },
+    today() {
+      const today = moment()
+      console.log(today)
+      return today
     },
     RegisterMain(id) {
       mainPinned(id)

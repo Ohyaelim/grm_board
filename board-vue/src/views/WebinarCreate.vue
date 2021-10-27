@@ -26,6 +26,7 @@
               />
               <v-text-field
                   label="연자"
+                  v-model="form.roomHost"
                   required
               />
               <v-text-field
@@ -35,10 +36,27 @@
               />
 <!--              날짜 입력-->
               <v-row>
-<!--                <DateTimePicker :label="'시작날짜'" required></DateTimePicker>-->
-<!--                <DateTimePicker :label="'종료날짜'" required></DateTimePicker>-->
-                <VueCtkDateTimePicker v-model="startDate" label="시작일시" format="YYYY-MM-DD HH:mm"/>
-                <VueCtkDateTimePicker v-model="endDate" label="종료일시" format="YYYY-MM-DD HH:mm"/>
+<!--                <datetime v-model="date" input-id="startDate">-->
+<!--                  <label for="startDate" slot="before">Field Label</label>-->
+<!--                  <span class="description" slot="after">The field description</span>-->
+<!--                  <template slot="button-cancel">-->
+<!--                    <fa :icon="['far', 'times']"></fa>-->
+<!--                    Cancel-->
+<!--                  </template>-->
+<!--                  <template slot="button-confirm">-->
+<!--                    <fa :icon="['fas', 'check-circle']"></fa>-->
+<!--                    Confirm-->
+<!--                  </template>-->
+<!--                </datetime>-->
+
+                <datetime
+                    type="datetime" v-model="startDate" format="yyyy-MM-dd HH:mm" color="purple">
+                  시작날짜
+                </datetime>
+                <datetime
+                    type="datetime" v-model="endDate" format="yyyy-MM-dd HH:mm" color="purple">
+                  종료날짜
+                </datetime>
 
               </v-row>
 <!--              이미지-->
@@ -68,7 +86,8 @@ export default {
       valid:false,
       form: {
         roomTitle:'',
-        passwd:''
+        passwd:'',
+        roomHost:''
       },
       startDate:'',
       endDate:'',
@@ -79,6 +98,7 @@ export default {
 
       const roomData = {
         roomTitle: this.form.roomTitle,
+        roomHost: this.form.roomHost,
         passwd: this.form.passwd,
         startDate: this.startDate,
         endDate: this.endDate

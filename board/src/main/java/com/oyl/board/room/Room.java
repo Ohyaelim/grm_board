@@ -37,6 +37,9 @@ public class Room {
     @Column(nullable = false, name = "room_id")
     private String roomId;
 
+    @Column(name = "room_host")
+    private String roomHost;
+
 
     // 방 삭제 확인
     @Builder.Default
@@ -58,5 +61,10 @@ public class Room {
     // 메인에 핀을 꼽는다.
     public void pinIn(){
         this.isPinned = Boolean.TRUE;
+    }
+
+    // 방을 삭제한다.
+    public void deleteRoom() {
+        this.isDeleted = Boolean.TRUE;
     }
 }

@@ -9,18 +9,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoomMainResponseDto {
+public class RoomResponseDto {
 
     private String roomTitle;
     private String startDate;
     private String endDate;
     private String roomId;
+    private String roomHost;
+    private Long id;
 
-    public RoomMainResponseDto(Room room) {
+    public RoomResponseDto(Room room) {
+        this.id = room.getId();
         this.roomTitle = room.getRoomTitle();
         this.startDate = room.getStartDate();
         this.endDate = room.getEndDate();
         this.roomId = room.getRoomId();
+        this.roomHost = room.getRoomHost();
     }
 
 }

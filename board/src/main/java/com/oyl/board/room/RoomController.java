@@ -1,20 +1,16 @@
 package com.oyl.board.room;
 
 import com.oyl.board.member.Member;
-import com.oyl.board.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.validation.Valid;
 import java.text.ParseException;
 
 @Slf4j
@@ -58,11 +54,17 @@ public class RoomController {
 
     // main에 게시할 웨비나 찾기
     @GetMapping()
-    public RoomMainResponseDto getMainRoom () {
+    public RoomResponseDto getMainRoom () {
         return roomService.getMainRoom();
     }
 
 
+    // 방 삭제
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteRoom (@PathVariable Long id) throws org.json.simple.parser.ParseException {
+        roomService.deleteRoom(id);
+        return ResponseEntity.ok().build();
+    }
 
 
 //    @PostMapping("/user/kick")

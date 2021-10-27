@@ -20,29 +20,36 @@
               제목
             </th>
             <th class="text-left">
-              시작일자
+              호스트
             </th>
             <th class="text-left">
-              마감일자
+              웨비나기간
             </th>
             <th class="text-left">
               입장
             </th>
           </tr>
           </thead>
-          <tbody>
-          <tr
+          <tbody
               v-for="item in webinarList"
-              :key="item.roomTitle"
+              :key="item.roomTitle">
+          <tr
+              v-if="item.isDeleted == false"
           >
             <!--            <td>{{ item.postId }}</td>-->
             <td>{{ item.roomTitle }}</td>
-            <td>{{ DateTime(item.startDate) }}</td>
-            <td>{{ DateTime(item.endDate) }}</td>
-            <td><v-btn
-                elevation="2" outlined color="purple" width="120" height="40" @click="EntranceGRM(item.roomId)"
-            >입장하기</v-btn></td>
+            <td>{{ item.roomHost }}</td>
+            <td>{{ DateTime(item.startDate) }}<br>~ {{ DateTime(item.endDate) }}</td>
+            <td>
+              <v-btn
+              elevation="2" outlined color="purple" width="120" height="40" v-if="true" @click="EntranceGRM(item.roomId)"
+              >입장하기</v-btn>
+              <v-btn
+                  elevation="2" outlined color="purple" width="120" height="40" v-else disabled @click="EntranceGRM(item.roomId)"
+              >종료</v-btn>
+            </td>
           </tr>
+
           </tbody>
         </template>
       </v-simple-table>
@@ -65,7 +72,7 @@ import moment from 'moment'
 export default {
   name: "Boards",
   computed: {
-    ...mapState(['isLogin'])
+    ...mapState(['isLogin']),
   },
   data() {
     return {
@@ -81,9 +88,11 @@ export default {
           .then((res) => {
             this.webinarList = res.data.content;
             console.log(res.data.content)
+            console.log(res.data.content.endDate)
+            console.log('날짜' + moment(res.data.content.endDate).isAfter(moment()))
           })
           .then((err) => {
-            console.log(err);
+            console.log('에러'+err);
           })
     },
     EntranceGRM(roomId){

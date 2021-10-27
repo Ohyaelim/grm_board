@@ -1,7 +1,6 @@
 package com.oyl.board.room;
 
 import com.oyl.board.member.Member;
-import com.oyl.board.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
@@ -27,13 +26,6 @@ public class RoomService {
 
     private final RestTemplate restTemplate;
     private final RoomRepository roomRepository;
-    private final MemberRepository memberRepository;
-
-//    public RoomService(RestTemplateBuilder restTemplateBuilder, RoomRepository roomRepository, MemberRepository memberRepository) {
-//        this.restTemplate = restTemplateBuilder.build();
-//        this.roomRepository = roomRepository;
-//        this.memberRepository = memberRepository;
-//    }
 
 
     // 방 개설하기
@@ -42,7 +34,7 @@ public class RoomService {
 
         String url = "https://biz-dev-api.gooroomee.com/api/v1/room";
 
-        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
         // startDate와 endDate 원하는 포맷으로 출력하자
         SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss Z", Locale.US);
@@ -52,9 +44,11 @@ public class RoomService {
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("roomTitle", dto.getRoomTitle());
+        params.add("roomHost", dto.getRoomHost());
         params.add("passwd", dto.getPasswd());
         params.add("startDate", realStartDate);
         params.add("endDate", realEndDate);
+
 
         // create headers
         HttpHeaders headers = new HttpHeaders();
@@ -80,6 +74,7 @@ public class RoomService {
             String roomId = (String) room.get("roomId");
             roomRepository.save(Room.builder()
                     .roomTitle(dto.getRoomTitle())
+                    .roomHost(dto.getRoomHost())
                     .passwd(dto.getPasswd())
                     .startDate(realStartDate)
                     .endDate(realEndDate)
@@ -237,9 +232,44 @@ public class RoomService {
 
     // 메인에 핀 꼽힌 아이찾기
     @Transactional
-    public RoomMainResponseDto getMainRoom() {
+    public RoomResponseDto getMainRoom() {
         Room mainRoom = roomRepository.findRoomByIsPinned(Boolean.TRUE);
-        return new RoomMainResponseDto(mainRoom);
+        return new RoomResponseDto(mainRoom);
+    }
+
+    // 방 삭제
+    @Transactional
+    public void deleteRoom(Long id) throws org.json.simple.parser.ParseException {
+        Room room = roomRepository.findById(id).orElseThrow();
+        if (room.getIsDeleted() == Boolean.FALSE)
+            deleteRoomApi(room.getRoomId());
+            room.deleteRoom();
+    }
+
+    @Transactional
+    public void deleteRoomApi(String roomId) throws org.json.simple.parser.ParseException {
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("roomId", roomId);
+
+        String url = "https://biz-dev-api.gooroomee.com/api/v1/room/" + roomId;
+
+        // create headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type",  "application/x-www-form-urlencoded; charset=utf-8");
+        headers.add("X-GRM-AuthToken", "1aa271b4af192d114c55199a81cc211093b170481d15119584");
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                url,
+                HttpMethod.DELETE,
+                entity,
+                String.class
+        );
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(response.getBody());
+        String resultCode = (String) jsonObject.get("resultCode");
     }
 
 }
