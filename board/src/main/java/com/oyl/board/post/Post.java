@@ -42,6 +42,7 @@ public class Post {
     @Column(name="reg_date")
     private LocalDate regDate;
 
+
     @ManyToOne
     @JoinColumn(name="member_id")
     private Member member;
@@ -63,7 +64,6 @@ public class Post {
     public void update(Post post){
         this.content =post.content;
         this.title = post.title;
-        this.regDate = post.regDate;
     }
 
     public void deletePost(){
