@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.text.ParseException;
@@ -175,11 +176,35 @@ public class RoomService {
         return null; // exception 처리해주자
     }
 
+    // TODO 참여자목록 뽑기
+    @Transactional
+    public JSONObject participantsList(String roomId) throws org.json.simple.parser.ParseException {
+
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .fromHttpUrl("https://biz-dev-api.gooroomee.com/api/v1/log/room/roomUser")
+                .queryParam("type","roomId")
+                .queryParam("roomId",roomId);
 
 
-    /*
-      * TODO 미팅룸 종료 - 리얼 종료를 시킬까? 아니면 isDeleted 줘서 리스트에 안보이게 해줄까?
-     */
+        // create headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type",  "application/x-www-form-urlencoded; charset=utf-8");
+        headers.add("X-GRM-AuthToken", "1aa271b4af192d114c55199a81cc211093b170481d15119584");
+        HttpEntity request = new HttpEntity(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                builder.toUriString(),
+                HttpMethod.GET,
+                request,
+                String.class
+        );
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(response.getBody());
+
+        log.info(response.getBody());
+        return jsonObject;
+    }
 
 
     // TODO 참여자 강퇴 마저 킵고잉

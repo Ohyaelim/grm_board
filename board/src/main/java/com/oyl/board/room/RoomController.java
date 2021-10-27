@@ -3,6 +3,7 @@ package com.oyl.board.room;
 import com.oyl.board.member.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -66,6 +67,12 @@ public class RoomController {
         return ResponseEntity.ok().build();
     }
 
+
+    // 참여자 목록 뽑기
+    @GetMapping("/participants/{roomId}")
+    public JSONObject getParticipantsList(@PathVariable String roomId) throws org.json.simple.parser.ParseException {
+        return roomService.participantsList(roomId);
+    }
 
 //    @PostMapping("/user/kick")
 //    public ResponseEntity<?> createRoom(PathVariable String id) {
