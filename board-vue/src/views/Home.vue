@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div style="overflow: hidden; width: 100%" >
-      <img src="..\assets\yrmyunv.jpg" style="height: 300px; width: 100%">
+    <div style="height: 300px" >
+      <img src="..\assets\yrmyunv.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden">
     </div>
     <v-container>
       <v-card style="width: 30%" height="300">

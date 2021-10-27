@@ -298,5 +298,7 @@ public class RoomService {
         String resultCode = (String) jsonObject.get("resultCode");
     }
 
+    // TODO 방 정보 업데이트
+
     // TODO 그룹별 실시간 사용자수
 }
