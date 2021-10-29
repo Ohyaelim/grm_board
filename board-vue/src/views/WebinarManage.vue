@@ -66,13 +66,12 @@
               <v-col>
                 <v-btn v-model="data.pinRoom" v-if="item.isPinned == true " outlined color="purple" @click="RegisterMain(item.id)">
                   이미메인;</v-btn>
-                <v-btn v-model="data.pinRoom" v-else @click="RegisterMain(item.id)">
+                <v-btn v-model="data.pinRoom" v-else-if="item.isPinned == false" @click="RegisterMain(item.id)">
                   메인등록</v-btn>
-
-                <v-btn v-model="data.pinRoom" v-if="today > item.endDate" @click="RegisterMain(item.id)">
+              </v-col>
+              <v-col>
+                <v-btn v-model="data.pinRoom" v-if="item.isDeleted == false" @click="DeleteWebinar(item.id)">
                   삭제</v-btn>
-                <v-btn v-model="data.pinRoom" v-else disabled @click="RegisterMain(item.id)">
-                  이미 종료</v-btn>
               </v-col>
             </td>
             <td><v-btn
@@ -85,7 +84,8 @@
       <div class="text-center">
         <v-pagination
             v-model="page"
-            :length="4"
+            :length="totalpages"
+            @input="handlePageChange"
             circle
         ></v-pagination>
       </div>
@@ -98,6 +98,7 @@
 import {mapState} from "vuex"
 import moment from 'moment'
 import {mainPinned} from "@/apis";
+import {deleteRoom} from "@/apis";
 
 export default {
   name: "Boards",
@@ -107,6 +108,8 @@ export default {
   data() {
     return {
       webinarList:'',
+      page: 1,
+      totalpages:'',
       data: {
         pinRoom: ''
       }
@@ -120,9 +123,10 @@ export default {
       this.$axios.get(`/webinar/list`)
           .then((res) => {
             this.webinarList = res.data.content;
+            this.totalpages = res.data.totalPages;
             console.log(res.data.content)
           })
-          .then((err) => {
+          .catch((err) => {
             console.log(err);
           })
     },
@@ -137,6 +141,21 @@ export default {
     RegisterMain(id) {
       mainPinned(id)
       window.location.reload()
+    },
+    DeleteWebinar(id) {
+      deleteRoom(id)
+      window.location.reload()
+    },
+    handlePageChange(value) {
+      this.page = value
+
+      this.$axios.get(`/webinar/list`+'?page='+(value-1))
+          .then((res) => {
+            this.webinarList = res.data.content;
+            console.log(res.data.content)
+          }).catch((err) => {
+        console.log(err);
+      })
     }
   }
 }

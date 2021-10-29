@@ -51,8 +51,12 @@ function createRoom(roomData) {
 
 function mainPinned(id) {
     return instance.post(`/webinar/main/`+ id).then(()=>
-    window.alert("됐네요;"))
+    window.alert("웨비나 메인등록!"))
 }
 
+function deleteRoom(id) {
+    return instance.delete(`/webinar/delete/`+id).then(()=>
+    window.alert("웨비나 삭제!"))
+}
 
-export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment, createRoom, mainPinned};
+export { registerUser, signInUser, createPost, getMyInfoApi, updatePost, deletePost, updateMyPage, createComment, createRoom, mainPinned, deleteRoom};

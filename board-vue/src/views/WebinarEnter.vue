@@ -56,7 +56,8 @@
       <div class="text-center">
         <v-pagination
             v-model="page"
-            :length="4"
+            :length="totalpages"
+            @input="handlePageChange"
             circle
         ></v-pagination>
       </div>
@@ -76,6 +77,8 @@ export default {
   },
   data() {
     return {
+      page: 1,
+      totalpages:'',
       webinarList:''
     };
   },
@@ -87,9 +90,11 @@ export default {
       this.$axios.get(`/webinar/list`)
           .then((res) => {
             this.webinarList = res.data.content;
+            this.totalpages = res.data.totalPages;
             console.log(res.data.content)
-            console.log(res.data.content.endDate)
+            console.log('길이'+res.data.content.length)
             console.log('날짜' + moment(res.data.content.endDate).isAfter(moment()))
+            console.log('totalpage '+this.datas.totalPages)
           })
           .catch((err) => {
             console.log('에러'+err);
@@ -103,9 +108,26 @@ export default {
     },
     DateTime(t) {
       return moment(t).format('📆 YYYY-MM-DD 🧭 hh:mm')
+    },
+    computed: {
+      rows() {
+        return this.datas.content.length
+      }
+    },
+    handlePageChange(value) {
+      this.page = value
+
+      this.$axios.get(`/webinar/list`+'?page='+(value-1))
+        .then((res) => {
+          this.webinarList = res.data.content;
+          console.log(res.data.content)
+        }).catch((err) => {
+          console.log(err);
+      })
     }
   }
 }
+
 </script>
 
 <style scoped>

@@ -3,7 +3,7 @@
     <div style="height: 300px" >
       <img src="..\assets\yrmyunv.jpg" style="height: 100%; width: 100%; object-fit: cover; overflow: hidden">
     </div>
-    <v-container>
+    <v-container >
       <v-card style="width: 30%" height="300">
         <v-card-title align="center">🏳‍🌈 Main WEBINAR :<br>{{room.roomTitle}}</v-card-title>
         <v-card-subtitle><br>🙋‍♀️강연자: {{room.roomHost}}</v-card-subtitle>
