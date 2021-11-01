@@ -49,7 +49,7 @@ public class CommentsController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         String email = authentication.getName();
         try {
-            Comments comments = this.commentsService.deleteComment(commentsId, email);
+            Comments comments = this.commentsService.deleteComment(commentsId);
             return ResponseEntity.ok(comments);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();

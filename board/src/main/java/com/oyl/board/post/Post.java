@@ -70,7 +70,7 @@ public class Post {
         this.isDeleted = Boolean.TRUE;
         List<Comments> comments = this.comments;
         for (Comments comment : comments) {
-            comment.setIsDeleted(Boolean.TRUE);
+            comment.setIsDeleted();
         }
     }
 

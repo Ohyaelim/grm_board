@@ -39,7 +39,7 @@ public class RoomService {
         SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
 
         // startDate와 endDate 원하는 포맷으로 출력하자
-        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss Z", Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss Z", Locale.KOREA);
         String realStartDate = dateFormat.format(transFormat.parse(dto.getStartDate()));
         String realEndDate = dateFormat.format(transFormat.parse(dto.getEndDate()));
 
@@ -259,8 +259,11 @@ public class RoomService {
     // 메인에 핀 꼽힌 아이찾기
     @Transactional
     public RoomResponseDto getMainRoom() {
-        Room mainRoom = roomRepository.findRoomByIsPinned(Boolean.TRUE);
-        return new RoomResponseDto(mainRoom);
+//        Room mainRoom = roomRepository.findRoomByIsPinned(Boolean.TRUE);
+        Room mainRoom = roomRepository.findRoomByIsPinnedAndIsDeletedNot(Boolean.TRUE,Boolean.TRUE);
+        if (mainRoom != null)
+            return new RoomResponseDto(mainRoom);
+        else return null; // TODO exception 잡아주자
     }
 
     // 방 삭제

@@ -36,16 +36,16 @@ public class CommentsService {
         Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
 
         Comments comments = Comments.builder()
-                .member(member)
+                .writer(member)
                 .post(post)
                 .email(member.getEmail())
-                .comments(commentsDto.getComments())
+                .content(commentsDto.getComments())
                 .parent(null)
                 .build();
 
         if (parentId != null) {
             Optional<Comments> parent = commentsRepository.findById(parentId);
-            comments.setParent(parent.get());
+            parent.get().setParent(comments);
         }
 
         Comments comment = commentsRepository.save(comments);
@@ -76,9 +76,9 @@ public class CommentsService {
     }
 
     @Transactional
-    public Comments deleteComment(Long commentsId, String visitorId) {
-        Comments comments = commentsRepository.findByCommentsIdAndMemberEmail(commentsId, visitorId).orElseThrow(CommentsNotFoundException::new);
-        comments.setIsDeleted(Boolean.TRUE);
+    public Comments deleteComment(Long commentsId) {
+        Comments comments = commentsRepository.findByCommentsId(commentsId).orElseThrow(CommentsNotFoundException::new);
+        comments.setIsDeleted();
         return commentsRepository.save(comments);
     }
 }

@@ -36,6 +36,8 @@
               />
 <!--              날짜 입력-->
               <v-row>
+<!--                <VueCtkDateTimePicker v-model="startDate" label="시작일시" format="YYYY-MM-DD HH:mm"/>-->
+<!--                <VueCtkDateTimePicker v-model="endDate" label="종료일시" format="YYYY-MM-DD HH:mm"/>-->
 <!--                <datetime v-model="date" input-id="startDate">-->
 <!--                  <label for="startDate" slot="before">Field Label</label>-->
 <!--                  <span class="description" slot="after">The field description</span>-->
@@ -50,11 +52,11 @@
 <!--                </datetime>-->
 
                 <datetime
-                    type="datetime" v-model="startDate" format="yyyy-MM-dd HH:mm" color="purple">
+                    type="datetime" v-model="startDate" format="yyyy-MM-dd HH:mm" :minute-step="15" value-zone="Asia/Seoul">
                   시작날짜
                 </datetime>
                 <datetime
-                    type="datetime" v-model="endDate" format="yyyy-MM-dd HH:mm" color="purple">
+                    type="datetime" v-model="endDate" format="yyyy-MM-dd HH:mm" :minute-step="15">
                   종료날짜
                 </datetime>
 
@@ -94,8 +96,7 @@ export default {
     }
   },
   methods:{
-    async submitForm(){
-
+    async submitForm() {
       const roomData = {
         roomTitle: this.form.roomTitle,
         roomHost: this.form.roomHost,

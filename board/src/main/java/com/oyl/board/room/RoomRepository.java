@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
     Room findRoomByIsPinned(Boolean isPinned);
+    Room findRoomByIsPinnedAndIsDeletedNot(Boolean isPinned, Boolean isDeleted);
+
     Page<Room> findAllByIsDeletedOrderByStartDate(Boolean isDeleted, @PageableDefault(size = 5)Pageable pageable);
 
 //    Page<Room> findAllByStartDateAndEndDate(@PageableDefault(size = 5)Pageable pageable);

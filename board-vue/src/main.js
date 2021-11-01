@@ -10,6 +10,7 @@ import {Datetime} from "vue-datetime";
 import moment from "moment"
 import 'vue-datetime/dist/vue-datetime.css'
 import VueMomentJS from "vue-momentjs"
+import {Settings} from "luxon";
 
 
 import './static/MyStyle.css'
@@ -23,6 +24,7 @@ extend('email', email);
 extend('required', required);
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false
+Settings.defaultLocale = 'es'
 
 new Vue({
   router,

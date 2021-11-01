@@ -30,9 +30,10 @@
     "vuetify": "^2.4.0",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^4.1.0",
-    "weekstart": "^1.1.0"
+    "weekstart": "^1.0.1"
   },
   "devDependencies": {
+    "@types/luxon": "^2.0.5",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",

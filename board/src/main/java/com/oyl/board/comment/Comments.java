@@ -25,28 +25,35 @@ public class Comments extends BaseTimeEntity {
     private String email;
 
     @Lob
-    private String comments;
+    @Column(nullable = false)
+    private String content;
 
-    @Setter
+    @Builder.Default
+    @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted = Boolean.FALSE;
 
-    // TODO: @ManyToOne(fetch = FetchType.LAZY)
-
     @Setter
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parents_id")
     private Comments parent;
 
-    @OneToMany
+    @Builder.Default
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Comments> children = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member writer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    // 삭제 flag
+    public void setIsDeleted() {
+        this.isDeleted = Boolean.TRUE;
+    }
 //
 //    public void setParent(Comments parent) {
 //        this.parent = parent;
