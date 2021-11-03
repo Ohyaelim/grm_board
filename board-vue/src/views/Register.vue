@@ -7,7 +7,7 @@
           <v-container>
             <v-text-field
                 v-model="email"
-                label="이메일"
+                label="이메일쿼치"
                 type="email"
                 :rules="emailRules"
                 required

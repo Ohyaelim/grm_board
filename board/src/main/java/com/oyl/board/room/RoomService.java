@@ -36,10 +36,10 @@ public class RoomService {
         String url = "https://biz-dev-api.gooroomee.com/api/v1/room";
 
         //TODO date용 메소드로 빼자
-        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         // startDate와 endDate 원하는 포맷으로 출력하자
-        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss Z", Locale.KOREA);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd yyyy HH:mm:ss Z", Locale.US);
         String realStartDate = dateFormat.format(transFormat.parse(dto.getStartDate()));
         String realEndDate = dateFormat.format(transFormat.parse(dto.getEndDate()));
 

@@ -11,11 +11,13 @@ import moment from "moment"
 import 'vue-datetime/dist/vue-datetime.css'
 import VueMomentJS from "vue-momentjs"
 import {Settings} from "luxon";
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 
 import './static/MyStyle.css'
 
-
+Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 Vue.component('datetime', Datetime);
 Vue.config.productionTip = false
 Vue.use(VueMomentJS,moment)

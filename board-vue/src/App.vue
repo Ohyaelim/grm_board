@@ -37,8 +37,8 @@
       </v-main>
 <!--      <Footer/>-->
       <div class="footer">
-        <span>&copy;2021 Goorooomee 오예림</span>
-        <span>contact to me : npr05080@gmail.com</span>
+        <span>&copy;2021 Gooroomee 오예림</span>
+        <span>contact: yaelim1122@gooroomee.com</span>
       </div>
     </v-app>
   </div>
@@ -80,6 +80,7 @@ export default {
 }
 .header {
   display: flex;
+  background-color: #efd8ec;
   justify-content: space-between;
   align-items: center;
   height: 80px;
