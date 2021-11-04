@@ -8,7 +8,7 @@
 
       <v-simple-table
           fixed-header
-          height="500px"
+          height="600px"
       >
         <template v-slot:default>
           <thead>

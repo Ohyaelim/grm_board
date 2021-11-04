@@ -29,7 +29,7 @@ public class RoomController {
     }
 
     @GetMapping("/list")
-    public Page<Room> getRoomList(@PageableDefault(size = 5) Pageable pageable) {
+    public Page<Room> getRoomList(@PageableDefault(size = 10) Pageable pageable) {
         return roomService.getRoomList(pageable);
     }
 

@@ -92,7 +92,7 @@ public class RoomService {
     }
 
 
-    public Page<Room> getRoomList (@PageableDefault(size = 5) Pageable pageable) {
+    public Page<Room> getRoomList (Pageable pageable) {
         return roomRepository.findAllByIsDeletedOrderByStartDate(Boolean.FALSE,pageable);
     }
 

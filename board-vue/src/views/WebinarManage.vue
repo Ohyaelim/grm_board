@@ -64,16 +64,19 @@
 <!--            <td>{{ item.endDate }}</td>-->
             <td>{{ DateTime(item.endDate) }}</td>
             <td>
-              <v-col>
+              <div class="btn">
                 <v-btn v-model="data.pinRoom" v-if="item.isPinned == true " outlined color="purple" @click="RegisterMain(item.id)">
                   이미메인;</v-btn>
                 <v-btn v-model="data.pinRoom" v-else-if="item.isPinned == false" @click="RegisterMain(item.id)">
                   메인등록</v-btn>
-              </v-col>
-              <v-col>
+                <v-btn v-model="data.pinRoom" v-if="item.isDeleted == false" @click="update = true">
+                  수정</v-btn>
+                <ddd v-if="update" @close="update=false">
+                  <h1>hi</h1>
+                </ddd>
                 <v-btn v-model="data.pinRoom" v-if="item.isDeleted == false" @click="DeleteWebinar(item.id)">
                   삭제</v-btn>
-              </v-col>
+              </div>
             </td>
             <td><v-btn
                 elevation="2" outlined color="purple" width="120" height="40"  @click="$router.push({name: 'ParticipantsList', params: { roomId: item.roomId },})"
@@ -111,6 +114,7 @@ export default {
       webinarList:'',
       page: 1,
       totalpages:'',
+      update: false,
       data: {
         pinRoom: ''
       }
@@ -163,4 +167,7 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  align-items: center;
+}
 </style>

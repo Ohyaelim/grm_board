@@ -15,7 +15,12 @@ import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
 
+
 import './static/MyStyle.css'
+import VModal from 'vue-js-modal'
+
+
+Vue.use(VModal, { dynamic: true })
 
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 Vue.component('datetime', Datetime);

@@ -38,28 +38,6 @@
               <v-row>
                 <VueCtkDateTimePicker v-model="form.startDate" label="시작일시" format="YYYY-MM-DD HH:mm"/>
                 <VueCtkDateTimePicker v-model="form.endDate" label="종료일시" format="YYYY-MM-DD HH:mm"/>
-<!--                <datetime v-model="date" input-id="startDate">-->
-<!--                  <label for="startDate" slot="before">Field Label</label>-->
-<!--                  <span class="description" slot="after">The field description</span>-->
-<!--                  <template slot="button-cancel">-->
-<!--                    <fa :icon="['far', 'times']"></fa>-->
-<!--                    Cancel-->
-<!--                  </template>-->
-<!--                  <template slot="button-confirm">-->
-<!--                    <fa :icon="['fas', 'check-circle']"></fa>-->
-<!--                    Confirm-->
-<!--                  </template>-->
-<!--                </datetime>-->
-
-<!--                <datetime-->
-<!--                    type="datetime" v-model="form.startDate" format="yyyy-MM-dd HH:mm" :minute-step="15">-->
-<!--                  시작날짜-->
-<!--                </datetime>-->
-<!--                <datetime-->
-<!--                    type="datetime" v-model="form.endDate" format="yyyy-MM-dd HH:mm" :minute-step="15">-->
-<!--                  종료날짜-->
-<!--                </datetime>-->
-
               </v-row>
 <!--              이미지-->
               <v-file-input

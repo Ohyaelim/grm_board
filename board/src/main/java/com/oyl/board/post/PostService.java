@@ -73,7 +73,7 @@ public class PostService {
     }
 
 
-    public Page<Post> findPostList(Long boardId, String keyword, @PageableDefault(size = 5) Pageable pageable) {
+    public Page<Post> findPostList(Long boardId, String keyword, Pageable pageable) {
         if (keyword == null) {
             return postRepository.findPostsByBoardBoardId(boardId, pageable);
         } else
