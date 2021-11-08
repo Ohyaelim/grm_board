@@ -1,6 +1,7 @@
 package com.oyl.board.room;
 
 import com.oyl.board.member.Member;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
@@ -302,6 +303,13 @@ public class RoomService {
     }
 
     // TODO 방 정보 업데이트
+//    public void updateRoom(Long id, RoomRequestDto dto) throws NotFoundException {
+//
+//        Room room = roomRepository.findById(id).orElseThrow(() -> new NotFoundException("없는 방"));
+//        if(room.getRoomStatus() == )
+//        room.update(dto);
+//
+//    }
 
     // TODO 그룹별 실시간 사용자수
 }

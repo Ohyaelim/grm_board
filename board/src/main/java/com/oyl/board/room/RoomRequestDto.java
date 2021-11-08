@@ -25,4 +25,6 @@ public class RoomRequestDto {
     private String roomId;
 
     private String roomHost;
+
+    private roomStatus roomStatus;
 }

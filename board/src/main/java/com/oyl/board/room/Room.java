@@ -40,6 +40,9 @@ public class Room {
     @Column(name = "room_host")
     private String roomHost;
 
+    @Column(name = "room_status")
+    @Enumerated(EnumType.STRING)
+    private roomStatus roomStatus;
 
     // 방 삭제 확인
     @Builder.Default
@@ -67,4 +70,15 @@ public class Room {
     public void deleteRoom() {
         this.isDeleted = Boolean.TRUE;
     }
+
+    // 방을 수정한다.
+    public void update(RoomRequestDto dto) {
+        this.roomTitle = dto.getRoomTitle();
+        this.roomHost = dto.getRoomHost();
+        this.startDate = dto.getStartDate();
+        this.endDate = dto.getEndDate();
+        this.roomStatus = dto.getRoomStatus();
+    }
+
+
 }

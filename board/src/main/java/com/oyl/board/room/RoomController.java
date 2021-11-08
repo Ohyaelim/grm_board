@@ -1,6 +1,7 @@
 package com.oyl.board.room;
 
 import com.oyl.board.member.Member;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
@@ -79,6 +80,13 @@ public class RoomController {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        Member member  = (Member) authentication.getPrincipal();
 //        roomService.kickUser(id,member);
+//        return ResponseEntity.ok().build();
+//    }
+
+    // TODO update api 생성
+//    @PutMapping("/update")
+//    public ResponseEntity updateRoom(@RequestBody RoomRequestDto dto, @PathVariable Long id) throws NotFoundException {
+//        roomService.updateRoom(id, dto);
 //        return ResponseEntity.ok().build();
 //    }
 }
